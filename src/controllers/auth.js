@@ -1,5 +1,5 @@
 import { ONE_DAY } from "../constants/index.js";
-import { singInUser, singUpUser, logOutUser,  resetPassword, requestResetToken } from "../services/auth.js";
+import { singInUser, singUpUser, logOutUser,  requestResetToken } from "../services/auth.js";
 
 
 export const createUserController = async(req, res)=>{
@@ -54,12 +54,3 @@ export const requestResetEmailController = async (req, res) => {
     });
   };
 
-export const resetPasswordController = async(req,res)=>{
-    await resetPassword(req.body);
-    
-    res.json({
-    status: 200,
-    message: 'Password was successfully reset!',
-    data: {},
-    });
-};    

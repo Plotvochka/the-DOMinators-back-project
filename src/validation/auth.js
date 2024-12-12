@@ -37,7 +37,3 @@ export const requestresetPasswordSchema = Joi.object({
 email: Joi.string().email().required(),
 });
 
-export const resetPasswordSchema = Joi.object({
-password: Joi.string().min(6).max(64).required(),
-
-});
