@@ -6,6 +6,8 @@ import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
+import userRouter from './routers/user.js';
+
 const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
@@ -15,6 +17,8 @@ export const startServer = () => {
   app.use(cors());
 
   // app.use(logger);
+
+  app.use(userRouter);
 
   app.get('/', (req, res) => {
     res.json({
