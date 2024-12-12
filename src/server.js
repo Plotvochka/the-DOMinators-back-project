@@ -1,10 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 // import { logger } from './middlewares/logger.js';
-
+import cookieParser from 'cookie-parser';
 import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import router from './routers/auth.js';
+
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -16,17 +18,26 @@ export const startServer = () => {
 
   // app.use(logger);
 
+  app.use(cookieParser());
+
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello World!',
     });
   });
 
-  app.use('*', notFoundHandler);
 
-  app.use(errorHandler);
+
+
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+
   });
+
+  app.use(router); 
+  
+  app.use('*', notFoundHandler);
+
+  app.use(errorHandler);
 };

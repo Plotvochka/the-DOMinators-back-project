@@ -36,14 +36,15 @@ data:  {
 });
 };
 
-export const logOutUserController = async(req, res)=>{
-if(req.cookies.sesionId){
-    logOutUser(req.cookies.sesionId);
-}
-res.clean('sessionId');
-res.clean('refreshToken');
-res.status(204).send();
+export const logOutUserController = async (req, res) => {
+  if (req.cookies.sessionId) {
+      await logOutUser(req.cookies.sessionId);  
+  }
+  res.clearCookie('sessionId'); 
+  res.clearCookie('refreshToken');  
+  res.status(204).send();
 };
+
 
 export const requestResetEmailController = async (req, res) => {
     await requestResetToken(req.body.email);
