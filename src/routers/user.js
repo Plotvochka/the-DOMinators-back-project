@@ -1,12 +1,23 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import ctrlWrapper from "../utils/ctrlWrapper.js";
-import isValidId from "../middlewares/isValidId.js";
+import ctrlWrapper from '../utils/ctrlWrapper.js';
+import isValidId from '../middlewares/isValidId.js';
 
-import * as userController from "../controllers/user.js";
+import * as userController from '../controllers/user.js';
 
 const userRouter = Router();
 
-userRouter.get('/users/:userId', isValidId, ctrlWrapper(userController.getUserInfoController));
+userRouter.get(
+  '/users/:userId',
+  isValidId,
+  ctrlWrapper(userController.getUserInfoController),
+);
+
+// my code
+userRouter.get(
+  '/dayly-norm',
+  isValidId,
+  ctrlWrapper(userController.updateUserDaylyNorm),
+);
 
 export default userRouter;

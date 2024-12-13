@@ -21,8 +21,6 @@ export const startServer = () => {
     }),
   );
 
-  // app.use('/water', waterRouter);
-
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello World!',

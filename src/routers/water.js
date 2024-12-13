@@ -3,6 +3,6 @@
 
 // const waterRouter = express.Router();
 
-// waterRouter.put('/update-water', updateWater);
+// waterRouter.post('/update-water', updateWater);
 
 // export default waterRouter;

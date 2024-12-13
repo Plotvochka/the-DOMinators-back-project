@@ -22,6 +22,11 @@ const userInfoSchema = new Schema(
       type: String,
       maxLength: 32,
     },
+    daylyNorm: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
   },
   { timestamps: true, versionKey: false },
 );
