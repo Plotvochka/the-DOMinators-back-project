@@ -1,0 +1,47 @@
+tags:
+  - User
+summary: User login in the app
+operationId: loginUser
+description: 'Logs in a user to the app and returns an authentication token'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: 'asd23@gmail.com'
+          name:
+            description: "User's password"
+            type: string
+            example: '2345gf345'
+responses:
+  '200':
+    description: ' Logged in a user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in a user!
+            data:
+              type: object
+              $ref: '../../components/schemas/auth.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
