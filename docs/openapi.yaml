@@ -13,15 +13,20 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: https://example.com/api/v1
+  - url: https://the-dominators-back-project.onrender.com
 paths:
-  /user:
+  /user/signup:
     post:
       $ref: ../swagger/path/user/singup.yaml
+  /user/signin:
+    post:
       $ref: ../swagger/path/user/singin.yaml
+  /user/logout:
+    post:
       $ref: ../swagger/path/user/logout.yaml
+  /user/password-reset:
+    post:
       $ref: ../swagger/path/user/pwd-reset.yaml
-
 components:
   securitySchemes:
     bearerAuth:
