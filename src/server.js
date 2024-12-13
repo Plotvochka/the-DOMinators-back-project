@@ -1,6 +1,7 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
+// import waterRouter from './routers/water.js';
 
 import { env } from './utils/env.js';
 
@@ -19,6 +20,8 @@ export const startServer = () => {
       },
     }),
   );
+
+  // app.use('/water', waterRouter);
 
   app.get('/', (req, res) => {
     res.json({
