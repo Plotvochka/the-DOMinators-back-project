@@ -8,6 +8,8 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import router from './routers/auth.js';
 
 
+import userRouter from './routers/user.js';
+
 const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
@@ -18,7 +20,11 @@ export const startServer = () => {
 
   // app.use(logger);
 
+
   app.use(cookieParser());
+
+  app.use(router);
+
 
   app.get('/', (req, res) => {
     res.json({

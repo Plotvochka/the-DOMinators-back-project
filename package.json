@@ -18,6 +18,7 @@
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@redocly/cli": "^1.26.0",
+
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
     "nodemon": "^3.1.7",
@@ -25,7 +26,8 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.7",
+       "cookie-parser": "^1.4.7",
+
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
