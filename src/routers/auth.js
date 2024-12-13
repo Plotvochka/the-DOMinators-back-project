@@ -7,7 +7,7 @@ import { ctrlWrapper } from "../middlewares/ctrlWrapper.js";
 
 const router = Router();
 
-router.post('/signup', validateBody(registrUserSchema), ctrlWrapper(createUserController));
+router.post('/singup', validateBody(registrUserSchema), ctrlWrapper(createUserController));
 
 router.post('/singin', validateBody(loginUserSchema), ctrlWrapper(logInUserController));
 
