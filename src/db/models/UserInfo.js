@@ -8,11 +8,6 @@ const userInfoSchema = new Schema(
       minLength: 8,
       maxLength: 64,
     },
-    oldPassword: {
-      type: String,
-      minLength: 8,
-      maxLength: 64,
-    },
     gender: {
       type: String,
       enum: ['male', 'female'],
@@ -21,6 +16,12 @@ const userInfoSchema = new Schema(
     name: {
       type: String,
       maxLength: 32,
+    },
+    avatarUrl: {
+      type: String,
+    },
+    daylyNorm: {
+      type: Number,
     },
   },
   { timestamps: true, versionKey: false },
