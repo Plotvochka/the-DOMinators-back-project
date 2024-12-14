@@ -43,8 +43,6 @@ export const updateUserDaylyNorm = async (req, res, next) => {
   const { userId } = req.params;
   const { daylyNorm } = req.body;
 
-  console.log(`Received update for userId: ${userId}, daylyNorm: ${daylyNorm}`); //пе
-
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw createHttpError(404, 'User not found');
   }
