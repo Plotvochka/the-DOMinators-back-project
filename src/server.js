@@ -8,7 +8,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import router from './routers/auth.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
-import userRouter from './routers/user.js';
+import userInfoRouter from './routers/userInfo.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -22,8 +22,12 @@ export const startServer = () => {
 
   app.use(cookieParser());
 
+
   app.use(userRouter);
   app.use('/api-docs', swaggerDocs());
+
+  app.use(router);
+  app.use(userInfoRouter);
 
   app.get('/', (req, res) => {
     res.json({
@@ -34,8 +38,6 @@ export const startServer = () => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-
-  app.use(router);
 
   app.use('*', notFoundHandler);
 

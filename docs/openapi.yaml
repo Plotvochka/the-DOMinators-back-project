@@ -27,6 +27,9 @@ paths:
   /user/password-reset:
     post:
       $ref: ../swagger/path/user/pwd-reset.yaml
+  /users/{userId}:
+    get:
+      $ref: ../swagger/path/userInfo/{id}/get.yaml
 components:
   securitySchemes:
     bearerAuth:

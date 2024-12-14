@@ -1,14 +1,10 @@
 import { Schema, model } from 'mongoose';
 
+
 const userInfoSchema = new Schema(
   {
     email: String,
     password: {
-      type: String,
-      minLength: 8,
-      maxLength: 64,
-    },
-    oldPassword: {
       type: String,
       minLength: 8,
       maxLength: 64,
@@ -21,6 +17,12 @@ const userInfoSchema = new Schema(
     name: {
       type: String,
       maxLength: 32,
+    },
+    avatarUrl: {
+      type: String,
+    },
+    daylyNorm: {
+      type: String,
     },
   },
   { timestamps: true, versionKey: false },
