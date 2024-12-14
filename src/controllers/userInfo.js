@@ -26,4 +26,20 @@ export const getUserInfoController = async (req, res, next) => {
     });
 };
 
-export const patchUserInfoController = async(req, res) => {};
+export const patchUserInfoController = async(req, res, next) => {
+  const { userId } = req.params;
+
+  const result = await userInfoServices.updateUserInfo(userId, req.body);
+  
+
+  if (!result) {
+    return next(createHttpError(404, "User not found"));
+  };
+  
+
+  res.json({
+    status: 200,
+    message: "Successfully upserted a user info!",
+    data: result.user,
+  });
+};
