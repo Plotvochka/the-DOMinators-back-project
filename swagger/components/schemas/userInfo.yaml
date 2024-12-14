@@ -16,11 +16,6 @@ properties:
     type: string
     minLength: 8
     maxLength: 64
-  oldPassword:
-    description: "User oldPassword"
-    type: string
-    minLength: 8
-    maxLength: 64
   gender:
     description: "User gender"
     type: string
@@ -30,3 +25,11 @@ properties:
     description: "User email"
     type: string
     example: swagger@gmail.com
+  avatarUrl:
+    description: "Link to User avatar"
+    type: string
+    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+  daylyNorm:
+    description: "Dayly norm user"
+    type: string
+    example: 15000ml
