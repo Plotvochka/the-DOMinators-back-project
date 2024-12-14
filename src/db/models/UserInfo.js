@@ -22,7 +22,7 @@ const userInfoSchema = new Schema(
       type: String,
     },
     daylyNorm: {
-      type: String,
+      type: Number,
     },
   },
   { timestamps: true, versionKey: false },
