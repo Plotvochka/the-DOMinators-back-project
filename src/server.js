@@ -6,6 +6,7 @@ import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import router from './routers/auth.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import userRouter from './routers/user.js';
 
@@ -21,7 +22,8 @@ export const startServer = () => {
 
   app.use(cookieParser());
 
-  app.use(router);
+  app.use(userRouter);
+  app.use('/api-docs', swaggerDocs());
 
   app.get('/', (req, res) => {
     res.json({
