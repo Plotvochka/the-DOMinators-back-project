@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Joi from "joi";
 
 export const updateUserInfoSchema = Joi.object({
@@ -11,3 +12,6 @@ export const updateUserInfoSchema = Joi.object({
 export const avatarUserSchema = Joi.object({
     avatarUrl: Joi.string(),
 });
+=======
+import Joi from "joi";
+>>>>>>> main
