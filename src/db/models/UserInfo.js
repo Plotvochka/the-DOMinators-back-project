@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 
-
 const userInfoSchema = new Schema(
   {
     email: String,
@@ -18,11 +17,13 @@ const userInfoSchema = new Schema(
       type: String,
       maxLength: 32,
     },
-    avatarUrl: {
-      type: String,
-    },
     daylyNorm: {
       type: Number,
+      required: true,
+      default: 2000,
+    },
+    avatarUrl: {
+      type: String,
     },
   },
   { timestamps: true, versionKey: false },
