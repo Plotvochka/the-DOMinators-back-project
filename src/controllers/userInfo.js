@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import createHttpError from "http-errors";
-import * as userServices from "../services/user.js";
+import * as userInfoServices from "../services/userInfo.js";
 
 export const getUserInfoController = async (req, res, next) => {
     const { userId } = req.params;
@@ -10,7 +10,7 @@ export const getUserInfoController = async (req, res, next) => {
         throw createHttpError(404, 'User not found');
       }
 
-      const data = await userServices.getUserInfo(userId);
+      const data = await userInfoServices.getUserInfo(userId);
       
 
       if (!data) {

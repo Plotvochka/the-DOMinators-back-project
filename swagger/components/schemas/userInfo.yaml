@@ -1,0 +1,36 @@
+type: object
+required:
+  - userId
+properties:
+  userId:
+    description: "User id"
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: "User name"
+    type: string
+    maxLength: 32
+    example: 'John Doe'
+  password:
+    description: "User password"
+    type: string
+    minLength: 8
+    maxLength: 64
+  oldPassword:
+    description: "User oldPassword"
+    type: string
+    minLength: 8
+    maxLength: 64
+  gender:
+    description: "User gender"
+    type: string
+    enum: ['male', 'female']
+    example: "female"
+  email:
+    description: "User email"
+    type: string
+    example: swagger@gmail.com
+  avatar:
+    description: "Link to User avatar"
+    type: string
+    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
