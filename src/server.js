@@ -22,6 +22,7 @@ export const startServer = () => {
   app.use(cookieParser());
 
   app.use(router);
+  app.use(userRouter);
 
   app.get('/', (req, res) => {
     res.json({
