@@ -25,3 +25,5 @@ export const getUserInfoController = async (req, res, next) => {
         data,
     });
 };
+
+export const patchUserInfoController = async(req, res) => {};

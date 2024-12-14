@@ -9,4 +9,6 @@ const userRouter = Router();
 
 userRouter.get('/users/:userId', isValidId, ctrlWrapper(userController.getUserInfoController));
 
+userRouter.patch('/users/:userId', isValidId, ctrlWrapper(userController.patchUserInfoController));
+
 export default userRouter;
