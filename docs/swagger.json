@@ -28,7 +28,7 @@
     }
   ],
   "paths": {
-    "/user/signup": {
+    "/signup": {
       "post": {
         "tags": [
           "Auth"
@@ -108,7 +108,7 @@
         }
       }
     },
-    "/user/signin": {
+    "/signin": {
       "post": {
         "tags": [
           "Auth"
@@ -182,7 +182,7 @@
         }
       }
     },
-    "/user/logout": {
+    "/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -208,7 +208,7 @@
         }
       }
     },
-    "/user/password-reset": {
+    "/password-reset": {
       "post": {
         "tags": [
           "Auth"
