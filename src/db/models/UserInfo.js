@@ -24,6 +24,7 @@ const userInfoSchema = new Schema(
     },
     avatarUrl: {
       type: String,
+      default: "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
     },
   },
   { timestamps: true, versionKey: false },

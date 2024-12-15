@@ -1,6 +1,6 @@
 tags:
   - User Info
-summary: Patch user info by id
+summary: Update user info by id
 operationId: patchUserInfo
 description: 'Update a user info with payload'
 security:
@@ -14,7 +14,7 @@ parameters:
       example: '65ca67e7ae7f10c88b598384'
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         properties:
