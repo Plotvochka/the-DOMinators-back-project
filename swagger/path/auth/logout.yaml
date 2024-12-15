@@ -10,5 +10,25 @@ requestBody:
 responses:
   '204':
     description: 'Successfully logged out the user'
+  '404':
+    description: 'Session not found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Session not found'
+            data:
+              type: object
+              $ref: '../../components/schemas/auth.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'

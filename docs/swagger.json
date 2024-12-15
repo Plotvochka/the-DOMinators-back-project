@@ -104,6 +104,35 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "409": {
+            "description": "Email was already used",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email is already in use"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": "../../components/schemas/auth.yaml"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -178,6 +207,35 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": "../../components/schemas/auth.yaml"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -204,6 +262,35 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": "../../components/schemas/auth.yaml"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
