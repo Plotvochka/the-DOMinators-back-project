@@ -597,6 +597,85 @@
           }
         }
       }
+    },
+    "/users/{userId}/water-rate": {
+      "patch": {
+        "tags": [
+          "Water rate"
+        ],
+        "summary": "Update user's daily water intake by id",
+        "operationId": "waterRate",
+        "description": "Updates the amount of water the user should consume daily and saves this value in the user`s profile. The maximum daily intake limit is 5000 ml.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "daylyNorm"
+                ],
+                "properties": {
+                  "daylyNorm": {
+                    "description": "New daily water intake amount (in milliliters). The maximum allowed value is 5000 ml.",
+                    "type": "number",
+                    "example": 2000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updates the amount of water the user should consume daily",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated daily norm for user with id ${userId}!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/patchInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
