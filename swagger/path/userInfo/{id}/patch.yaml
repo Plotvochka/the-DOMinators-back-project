@@ -1,6 +1,6 @@
 tags:
   - User Info
-summary: Patch user info
+summary: Patch user info by id
 operationId: patchUserInfo
 description: 'Update a user info with payload'
 security:
