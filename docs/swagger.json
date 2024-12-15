@@ -25,6 +25,10 @@
     {
       "name": "Auth",
       "description": "Auth operations."
+    },
+    {
+      "name": "Water",
+      "description": "Operations with water."
     }
   ],
   "paths": {

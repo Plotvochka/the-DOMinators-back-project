@@ -11,6 +11,8 @@ tags:
     description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: Water
+    description: Operations with water.
 servers:
   - url: http://localhost:3000
   - url: https://the-dominators-back-project.onrender.com
