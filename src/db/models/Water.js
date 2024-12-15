@@ -14,7 +14,7 @@ const waterSchema = new Schema({
   amount: {
     type: Number,
     required: true,
-    max: 15000,
+    max: 5000,
   },
 });
 
