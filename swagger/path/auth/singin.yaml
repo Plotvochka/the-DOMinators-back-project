@@ -43,5 +43,25 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/auth.yaml'
+  '404':
+    description: User not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'User not found'
+            data:
+              type: object
+              $ref: '../../components/schemas/auth.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'

@@ -48,5 +48,25 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/auth.yaml'
+  '409':
+    description: Email was already used
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: 'Email is already in use'
+            data:
+              type: object
+              $ref: '../../components/schemas/auth.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
