@@ -9,6 +9,7 @@ import router from './routers/auth.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import userInfoRouter from './routers/userInfo.js';
+import waterRouter from './routers/water.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -26,6 +27,7 @@ export const startServer = () => {
 
   app.use(router);
   app.use(userInfoRouter);
+  app.use(waterRouter);
 
   app.get('/', (req, res) => {
     res.json({
