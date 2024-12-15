@@ -1,0 +1,81 @@
+tags:
+  - Water
+summary: Create water record
+operationId: createWaterRecord
+description: 'Дані для створення нового запису про воду'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - userId
+          - amount
+        properties:
+          userId:
+            description: "User's id"
+            type: string
+            example: '675da24a76eb81960c1d790a'
+          amount:
+            description: 'Amount of water in milliliters'
+            type: number
+            example: 2000
+responses:
+  '201':
+    description: 'Successfully created a water record!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully created a water record!'
+            data:
+              type: object
+              properties:
+                userId:
+                  description: "User's id"
+                  type: string
+                  example: '675da24a76eb81960c1d790a'
+                amount:
+                  description: 'Amount of water in milliliters'
+                  type: number
+                  example: 2000
+  '400':
+    description: 'Bad request. Amount must be between 1 and 50000 ml.'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Amount must be between 1 and 50000 ml.'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    description: 'Internal server error'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: 'An error occurred while processing the request.'
