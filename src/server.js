@@ -6,9 +6,8 @@ import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import router from './routers/auth.js';
-
-
 import userRouter from './routers/user.js';
+import waterRouter from './routers/waterOl.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -20,11 +19,9 @@ export const startServer = () => {
 
   // app.use(logger);
 
-
   app.use(cookieParser());
 
   app.use(router);
-
 
   app.get('/', (req, res) => {
     res.json({
@@ -32,17 +29,14 @@ export const startServer = () => {
     });
   });
 
-
-
-
-
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-
   });
 
-  app.use(router); 
-  
+  app.use(router);
+  app.use(userRouter);
+  app.use('/waters', waterRouter);
+
   app.use('*', notFoundHandler);
 
   app.use(errorHandler);
