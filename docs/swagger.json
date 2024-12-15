@@ -598,14 +598,14 @@
         }
       }
     },
-    "/users/{userId}:water-rate": {
+    "/users/{userId}/water-rate": {
       "patch": {
         "tags": [
           "Water rate"
         ],
         "summary": "Update user's daily water intake by id",
         "operationId": "waterRate",
-        "description": "Updates the amount of water the user should consume daily and saves this value in the user`s profile. The maximum daily intake limit is 15000 ml.",
+        "description": "Updates the amount of water the user should consume daily and saves this value in the user`s profile. The maximum daily intake limit is 5000 ml.",
         "security": [
           {
             "bearerAuth": []
@@ -632,7 +632,7 @@
                 ],
                 "properties": {
                   "daylyNorm": {
-                    "description": "New daily water intake amount (in milliliters). The maximum allowed value is 15000 ml.",
+                    "description": "New daily water intake amount (in milliliters). The maximum allowed value is 5000 ml.",
                     "type": "number",
                     "example": 2000
                   }
