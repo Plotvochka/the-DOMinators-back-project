@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Auth
 summary: User login in the app
 operationId: loginUser
 description: 'Logs in a user to the app and returns an authentication token'

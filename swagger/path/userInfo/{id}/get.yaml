@@ -1,15 +1,15 @@
 tags:
-  - User Info
+  - User
 summary: Get user Info by id
 operationId: getUserInfo
 description: 'Get user info by id'
 security:
   - bearerAuth: []
 parameters:
-   - in: path
-     name: userId
-     required: true
-     schema:
+  - in: path
+    name: userId
+    required: true
+    schema:
       type: string
       example: '65ca67e7ae7f10c88b598384'
 responses:

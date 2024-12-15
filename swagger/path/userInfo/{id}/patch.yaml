@@ -1,15 +1,15 @@
 tags:
-  - User Info
+  - User
 summary: Update user info by id
 operationId: patchUserInfo
 description: 'Update a user info with payload'
 security:
   - bearerAuth: []
 parameters:
-   - in: path
-     name: userId
-     required: true
-     schema:
+  - in: path
+    name: userId
+    required: true
+    schema:
       type: string
       example: '65ca67e7ae7f10c88b598384'
 requestBody:
@@ -19,22 +19,22 @@ requestBody:
         type: object
         properties:
           name:
-            description: "User name"
+            description: 'User name'
             type: string
             example: 'John Doe'
             maxLength: 32
           password:
-            description: "User password"
+            description: 'User password'
             type: string
             minLength: 8
             maxLength: 64
           oldPassword:
-            description: "User oldPassword"
+            description: 'User oldPassword'
             type: string
             minLength: 8
             maxLength: 64
           email:
-            description: "User email"
+            description: 'User email'
             type: string
           gender:
             description: 'User gender'

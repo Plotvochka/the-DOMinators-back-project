@@ -1,5 +1,5 @@
 tags:
-  - User Info
+  - User
 summary: Update user avatar by id
 operationId: patchUserAvatar
 description: 'Update a user avatar with payload'

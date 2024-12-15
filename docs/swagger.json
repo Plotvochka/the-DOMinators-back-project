@@ -2,12 +2,12 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Students app",
+    "title": "Water app",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "This is a documentation of students app"
+    "description": "This is a documentation of water app"
   },
   "servers": [
     {
@@ -19,7 +19,7 @@
   ],
   "tags": [
     {
-      "name": "Students",
+      "name": "User",
       "description": "Operations about users."
     },
     {
@@ -31,7 +31,7 @@
     "/user/signup": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "Registering a user in the app",
         "operationId": "signUpUser",
@@ -111,7 +111,7 @@
     "/user/signin": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "User login in the app",
         "operationId": "loginUser",
@@ -185,7 +185,7 @@
     "/user/logout": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "User logout from the app",
         "operationId": "logOutUser",
@@ -211,7 +211,7 @@
     "/user/password-reset": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "Password reset for a user",
         "operationId": "resetPassword",
@@ -279,7 +279,7 @@
     "/users/{userId}": {
       "get": {
         "tags": [
-          "User Info"
+          "User"
         ],
         "summary": "Get user Info by id",
         "operationId": "getUserInfo",
@@ -337,9 +337,9 @@
       },
       "patch": {
         "tags": [
-          "User Info"
+          "User"
         ],
-        "summary": "Patch user info",
+        "summary": "Patch user info by id",
         "operationId": "patchUserInfo",
         "description": "Update a user info with payload",
         "security": [

@@ -1,13 +1,13 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Students app
+  title: Water app
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: This is a documentation of students app
+  description: This is a documentation of water app
 tags:
-  - name: Students
+  - name: User
     description: Operations about users.
   - name: Auth
     description: Auth operations.
@@ -30,7 +30,7 @@ paths:
   /users/{userId}:
     get:
       $ref: ../swagger/path/userInfo/{id}/get.yaml
-    patch: 
+    patch:
       $ref: ../swagger/path/userInfo/{id}/patch.yaml
   /users/{userId}:avatarUrl:
     patch: 
