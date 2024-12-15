@@ -884,42 +884,28 @@
         "tags": [
           "Water"
         ],
-        "summary": "Create water record",
-        "operationId": "createWaterRecord",
-        "description": "Дані для створення нового запису про воду",
+        "summary": "Delete water record",
+        "operationId": "deleteWaterRecord",
+        "description": "Дані для видалення нового запису про воду",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "userId",
-                  "amount"
-                ],
-                "properties": {
-                  "userId": {
-                    "description": "User's id",
-                    "type": "string",
-                    "example": "675da24a76eb81960c1d790a"
-                  },
-                  "amount": {
-                    "description": "Amount of water in milliliters",
-                    "type": "number",
-                    "example": 200
-                  }
-                }
-              }
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
             }
           }
-        },
+        ],
         "responses": {
           "201": {
-            "description": "Successfully created a water record!",
+            "description": "Successfully deleted a water record!",
             "content": {
               "application/json": {
                 "schema": {
@@ -936,7 +922,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created a water record!"
+                      "example": "Successfully deleted a water record!"
                     },
                     "data": {
                       "type": "object",
