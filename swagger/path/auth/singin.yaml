@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Auth
 summary: User login in the app
 operationId: loginUser
 description: 'Logs in a user to the app and returns an authentication token'
@@ -40,6 +40,26 @@ responses:
             message:
               type: string
               example: Successfully logged in a user!
+            data:
+              type: object
+              $ref: '../../components/schemas/auth.yaml'
+  '404':
+    description: User not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'User not found'
             data:
               type: object
               $ref: '../../components/schemas/auth.yaml'

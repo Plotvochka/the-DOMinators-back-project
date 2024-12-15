@@ -16,13 +16,13 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 const router = Router();
 
 router.post(
-  '/singup',
+  '/signup',
   validateBody(registrUserSchema),
   ctrlWrapper(createUserController),
 );
 
 router.post(
-  '/singin',
+  '/signin',
   validateBody(loginUserSchema),
   ctrlWrapper(logInUserController),
 );

@@ -1,0 +1,47 @@
+tags:
+  - User
+summary: Update user avatar by id
+operationId: patchUserAvatar
+description: 'Update a user avatar with payload'
+security:
+  - bearerAuth: []
+parameters:
+   - in: path
+     name: userId
+     required: true
+     schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          avatarUrl:
+            description: "User Avatar"
+            type: string
+            example: 'https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg'
+responses:
+  '200':
+    description: Update a avatar
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully update to user avatar!
+            data:
+              type: object
+              $ref: ../../../components/schemas/patchInfoSchema.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml

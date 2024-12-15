@@ -8,11 +8,6 @@ const userInfoSchema = new Schema(
       minLength: 8,
       maxLength: 64,
     },
-    oldPassword: {
-      type: String,
-      minLength: 8,
-      maxLength: 64,
-    },
     gender: {
       type: String,
       enum: ['male', 'female'],
@@ -21,6 +16,15 @@ const userInfoSchema = new Schema(
     name: {
       type: String,
       maxLength: 32,
+    },
+    daylyNorm: {
+      type: Number,
+      required: true,
+      default: 2000,
+    },
+    avatarUrl: {
+      type: String,
+      default: "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
     },
   },
   { timestamps: true, versionKey: false },

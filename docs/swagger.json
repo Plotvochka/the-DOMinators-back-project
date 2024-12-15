@@ -1,1 +1,845 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Water app",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of water app"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://the-dominators-back-project.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations about users."
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    }
+  ],
+  "paths": {
+    "/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registering a user in the app",
+        "operationId": "signUpUser",
+        "description": "Registering a user in the app",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password",
+                  "repeatPassword"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User`s email",
+                    "type": "string",
+                    "example": "asdaf22@gmail.com"
+                  },
+                  "password": {
+                    "description": "The password chosen by the user(min. 8 characters max. 64 characters) ",
+                    "type": "string",
+                    "example": "12345678"
+                  },
+                  "repeatPassword": {
+                    "description": "Repetition of the password chosen by the user",
+                    "type": "string",
+                    "example": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "409": {
+            "description": "Email was already used",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email is already in use"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User login in the app",
+        "operationId": "loginUser",
+        "description": "Logs in a user to the app and returns an authentication token",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "asd23@gmail.com"
+                  },
+                  "name": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "2345gf345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": " Logged in a user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User logout from the app",
+        "operationId": "logOutUser",
+        "description": "Logs out a user from the app by clearing the session and authentication tokens",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "204": {
+            "description": "Successfully logged out the user"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/password-reset": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Password reset for a user",
+        "operationId": "resetPassword",
+        "description": "Send an email with a temporary password for a user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User`s email",
+                    "type": "string",
+                    "example": "dfgh34@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset user`s password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Reset password email was successfully sent!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user Info by id",
+        "operationId": "getUserInfo",
+        "description": "Get user info by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get user info by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found user info with id 65ca67e7ae7f10c88b598384!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/userInfo"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user info by id",
+        "operationId": "patchUserInfo",
+        "description": "Update a user info with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "User name",
+                    "type": "string",
+                    "example": "John Doe",
+                    "maxLength": 32
+                  },
+                  "password": {
+                    "description": "User password",
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64
+                  },
+                  "oldPassword": {
+                    "description": "User oldPassword",
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64
+                  },
+                  "email": {
+                    "description": "User email",
+                    "type": "string"
+                  },
+                  "gender": {
+                    "description": "User gender",
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully update to user info!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/patchInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/users/{userId}:avatarUrl": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user avatar by id",
+        "operationId": "patchUserAvatar",
+        "description": "Update a user avatar with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatarUrl": {
+                    "description": "User Avatar",
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully update to user avatar!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/patchInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/users/{userId}/water-rate": {
+      "patch": {
+        "tags": [
+          "Water rate"
+        ],
+        "summary": "Update user's daily water intake by id",
+        "operationId": "waterRate",
+        "description": "Updates the amount of water the user should consume daily and saves this value in the user`s profile. The maximum daily intake limit is 5000 ml.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "daylyNorm"
+                ],
+                "properties": {
+                  "daylyNorm": {
+                    "description": "New daily water intake amount (in milliliters). The maximum allowed value is 5000 ml.",
+                    "type": "number",
+                    "example": 2000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updates the amount of water the user should consume daily",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated daily norm for user with id ${userId}!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/patchInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "auth": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "description": "User`s email",
+            "type": "string",
+            "example": "asflb354@gmail.com"
+          },
+          "password": {
+            "description": "User`s password",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          }
+        }
+      },
+      "userInfo": {
+        "type": "object",
+        "required": [
+          "userId",
+          "daylyNorm"
+        ],
+        "properties": {
+          "userId": {
+            "description": "User id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User name",
+            "type": "string",
+            "maxLength": 32,
+            "example": "John Doe"
+          },
+          "password": {
+            "description": "User password",
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "gender": {
+            "description": "User gender",
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ],
+            "example": "female"
+          },
+          "email": {
+            "description": "User email",
+            "type": "string",
+            "example": "swagger@gmail.com"
+          },
+          "avatarUrl": {
+            "description": "Link to User avatar",
+            "type": "string",
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+          },
+          "daylyNorm": {
+            "description": "Dayly norm user",
+            "type": "number",
+            "example": 2000
+          }
+        }
+      },
+      "patchInfoSchema": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "description": "User id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User name",
+            "type": "string",
+            "maxLength": 32,
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "User email",
+            "type": "string",
+            "example": "swagger@gmail.com"
+          },
+          "password": {
+            "description": "user password",
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "gender": {
+            "description": "User gender",
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ],
+            "example": "female"
+          },
+          "avatarUrl": {
+            "description": "user avatar",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+          },
+          "daylyNorm": {
+            "description": "User dayly norm",
+            "type": "number",
+            "example": 2000
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
