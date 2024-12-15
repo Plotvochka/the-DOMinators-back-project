@@ -1,6 +1,7 @@
 type: object
 required:
   - userId
+  - daylyNorm
 properties:
   userId:
     description: "User id"
@@ -31,5 +32,5 @@ properties:
     example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
   daylyNorm:
     description: "Dayly norm user"
-    type: string
-    example: 15000ml
+    type: number
+    example: 2000

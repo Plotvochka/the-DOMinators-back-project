@@ -1,5 +1,11 @@
 import UserInfoCollection from '../db/models/UserInfo.js';
 
+export const avatarUserServices = (userId, avatarUrl) => {
+  return UserInfoCollection.findByIdAndUpdate(userId, {avatarUrl},
+    { new: true, runValidators: true },
+  );
+};
+
 export const getUserInfo = ({ userId }) =>
   UserInfoCollection.findOne({ userId });
 
