@@ -35,6 +35,15 @@ paths:
   /users/{userId}:avatarUrl:
     patch:
       $ref: ../swagger/path/userInfo/{id}/patchAvatar.yaml
+  /water:
+    post:
+      $ref: ../swagger/path/water/post.yaml
+  /water/{userId}:
+    patch:
+      $ref: ../swagger/path/water/patch.yaml
+  /water/{userId}:
+    delete:
+      $ref: ../swagger/path/water/delete.yaml
 components:
   securitySchemes:
     bearerAuth:
