@@ -127,7 +127,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "example": "../../components/schemas/auth.yaml"
+                      "$ref": "#/components/schemas/auth"
                     }
                   }
                 }
@@ -230,7 +230,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "example": "../../components/schemas/auth.yaml"
+                      "$ref": "#/components/schemas/auth"
                     }
                   }
                 }
@@ -285,7 +285,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "example": "../../components/schemas/auth.yaml"
+                      "$ref": "#/components/schemas/auth"
                     }
                   }
                 }
