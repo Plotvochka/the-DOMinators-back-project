@@ -52,7 +52,7 @@ responses:
                   type: number
                   example: 2000
   '400':
-    description: 'Bad request. Amount must be between 1 and 50000 ml.'
+    description: 'Bad request. Amount must be between 1 and 5000 ml.'
     content:
       application/json:
         schema:
@@ -63,7 +63,7 @@ responses:
               example: 400
             message:
               type: string
-              example: 'Amount must be between 1 and 50000 ml.'
+              example: 'Amount must be between 1 and 5000 ml.'
   '401':
     $ref: '../../components/responses/401.yaml'
   '500':

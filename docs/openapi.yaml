@@ -42,7 +42,6 @@ paths:
   /water/{userId}:
     patch:
       $ref: ../swagger/path/water/patch.yaml
-  /water/{userId}:
     delete:
       $ref: ../swagger/path/water/delete.yaml
 
