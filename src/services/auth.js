@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { UsersCollection } from "../db/models/user.js";
+import  UserInfoCollection  from '../db/models/UserInfo.js'; 
 import createHttpError from 'http-errors';
 import { ONE_DAY, FIFTEEN_MINUTES } from '../constants/index.js';
 import { SessionCollection } from '../db/models/session.js';
@@ -16,14 +16,14 @@ import { TEMPLATES_DIR } from '../constants/index.js';
 
 export const singUpUser = async (payload) => {
    
-    const user = await UsersCollection.findOne({ email: payload.email });
+    const user = await UserInfoCollection.findOne({ email: payload.email });
     if (user) throw createHttpError(409, 'Email is already in use');
 
   
     const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
 
-    return await UsersCollection.create({
+    return await UserInfoCollection.create({
         ...payload,
         password: encryptedPassword,
     });
@@ -31,7 +31,7 @@ export const singUpUser = async (payload) => {
 
 export const singInUser = async (payload) => {
 
-    const user = await UsersCollection.findOne({ email: payload.email });
+    const user = await UserInfoCollection.findOne({ email: payload.email });
     if (!user) throw createHttpError(404, 'User not found');
 
  
@@ -73,7 +73,7 @@ export const createSession = () => {
 
 
 export const requestResetToken = async(email) => {
-  const user = await UsersCollection.findOne({email});
+  const user = await UserInfoCollection.findOne({email});
   if(!user){
       throw createHttpError(404, 'User not found');
   }
@@ -82,7 +82,7 @@ export const requestResetToken = async(email) => {
   const temporaryPassword = randomBytes(4).toString('hex');
 
   const encryptedPassword = await bcrypt.hash(temporaryPassword, 10);
-  await UsersCollection.updateOne(
+  await UserInfoCollection.updateOne(
     { _id: user._id },
     { password: encryptedPassword }
   );
