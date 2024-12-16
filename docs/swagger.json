@@ -289,7 +289,7 @@
                     },
                     "data": {
                       "type": "string",
-                      "example": "Session  not found"
+                      "example": "Session not found"
                     }
                   }
                 }
@@ -299,7 +299,7 @@
         }
       }
     },
-    "/password-reset": {
+    "/request-reset-pwd": {
       "post": {
         "tags": [
           "Auth"
