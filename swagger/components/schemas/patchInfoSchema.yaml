@@ -23,10 +23,6 @@ properties:
     type: string
     enum: ["male", "female"]
     example: "female"
-  avatarUrl:
-    description: "user avatar"
-    type: string
-    example: 'https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg'
   daylyNorm:
     description: "User dayly norm"
     type: number

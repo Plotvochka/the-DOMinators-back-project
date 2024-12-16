@@ -34,8 +34,13 @@ paths:
       $ref: ../swagger/path/userInfo/{id}/get.yaml
     patch:
       $ref: ../swagger/path/userInfo/{id}/patch.yaml
+<<<<<<< HEAD
+  /users/{userId}/avatarUrl:
+    patch: 
+=======
   /users/{userId}:avatarUrl:
     patch:
+>>>>>>> main
       $ref: ../swagger/path/userInfo/{id}/patchAvatar.yaml
 
   /water:

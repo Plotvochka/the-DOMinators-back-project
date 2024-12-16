@@ -10,7 +10,7 @@ import * as userValidation from '../validation/user.js';
 
 const userInfoRouter = Router();
 
-userInfoRouter.patch('/users/:userId', isValidId, upload.single('avatarUrl'), validateBody(userValidation.avatarUserSchema), ctrlWrapper(userInfoController.patchAvatarUser));
+userInfoRouter.patch('/users/:userId/avatarUrl', isValidId, upload.single('avatarUrl'), validateBody(userValidation.avatarUserSchema), ctrlWrapper(userInfoController.patchAvatarUser));
 
 userInfoRouter.get(
   '/users/:userId',
