@@ -11,30 +11,51 @@ tags:
     description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: Water
+    description: Operations with water.
 servers:
   - url: http://localhost:3000
   - url: https://the-dominators-back-project.onrender.com
 paths:
-  /user/signup:
+  /signup:
     post:
-      $ref: ../swagger/path/user/singup.yaml
-  /user/signin:
+      $ref: ../swagger/path/auth/singup.yaml
+  /signin:
     post:
-      $ref: ../swagger/path/user/singin.yaml
-  /user/logout:
+      $ref: ../swagger/path/auth/singin.yaml
+  /logout:
     post:
-      $ref: ../swagger/path/user/logout.yaml
-  /user/password-reset:
+      $ref: ../swagger/path/auth/logout.yaml
+  /request-reset-pwd:
     post:
-      $ref: ../swagger/path/user/pwd-reset.yaml
+      $ref: ../swagger/path/auth/request-reset-pwd.yaml
   /users/{userId}:
     get:
       $ref: ../swagger/path/userInfo/{id}/get.yaml
     patch:
       $ref: ../swagger/path/userInfo/{id}/patch.yaml
+<<<<<<< HEAD
   /users/{userId}/avatarUrl:
     patch: 
+=======
+  /users/{userId}:avatarUrl:
+    patch:
+>>>>>>> main
       $ref: ../swagger/path/userInfo/{id}/patchAvatar.yaml
+
+  /water:
+    post:
+      $ref: ../swagger/path/water/post.yaml
+  /water/{userId}:
+    patch:
+      $ref: ../swagger/path/water/patch.yaml
+    delete:
+      $ref: ../swagger/path/water/delete.yaml
+
+  /users/{userId}/water-rate:
+    patch:
+      $ref: ../swagger/path/userInfo/{id}/patchWaterRate.yaml
+
 components:
   securitySchemes:
     bearerAuth:

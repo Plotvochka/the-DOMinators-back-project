@@ -25,10 +25,14 @@
     {
       "name": "Auth",
       "description": "Auth operations."
+    },
+    {
+      "name": "Water",
+      "description": "Operations with water."
     }
   ],
   "paths": {
-    "/user/signup": {
+    "/signup": {
       "post": {
         "tags": [
           "Auth"
@@ -104,11 +108,40 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "409": {
+            "description": "Email was already used",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email is already in use"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/auth"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/user/signin": {
+    "/signin": {
       "post": {
         "tags": [
           "Auth"
@@ -178,11 +211,40 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/user/logout": {
+    "/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -204,11 +266,40 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session not found"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "Session not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/user/password-reset": {
+    "/request-reset-pwd": {
       "post": {
         "tags": [
           "Auth"
@@ -339,7 +430,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Patch user info by id",
+        "summary": "Update user info by id",
         "operationId": "patchUserInfo",
         "description": "Update a user info with payload",
         "security": [
@@ -360,7 +451,7 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -434,6 +525,549 @@
           }
         }
       }
+    },
+    "/users/{userId}:avatarUrl": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user avatar by id",
+        "operationId": "patchUserAvatar",
+        "description": "Update a user avatar with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatarUrl": {
+                    "description": "User Avatar",
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully update to user avatar!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/patchInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Create water record",
+        "operationId": "createWaterRecord",
+        "description": "Дані для створення нового запису про воду",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "userId",
+                  "amount"
+                ],
+                "properties": {
+                  "userId": {
+                    "description": "User's id",
+                    "type": "string",
+                    "example": "675da24a76eb81960c1d790a"
+                  },
+                  "amount": {
+                    "description": "Amount of water in milliliters",
+                    "type": "number",
+                    "example": 2000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a water record!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "description": "User's id",
+                          "type": "string",
+                          "example": "675da24a76eb81960c1d790a"
+                        },
+                        "amount": {
+                          "description": "Amount of water in milliliters",
+                          "type": "number",
+                          "example": 2000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Amount must be between 1 and 5000 ml.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Amount must be between 1 and 5000 ml."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "An error occurred while processing the request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/water/{userId}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update water record",
+        "operationId": "updateWaterRecord",
+        "description": "Оновлення запису про воду для користувача",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID користувача, для якого потрібно оновити запис",
+            "schema": {
+              "type": "string",
+              "example": "675da24a76eb81960c1d790a"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "date": {
+                    "description": "Дата запису (ISO формат)",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-15T00:00:00.000Z"
+                  },
+                  "amount": {
+                    "description": "Кількість води у мілілітрах",
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 5000,
+                    "example": 200
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успішно оновлено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "example": "675da24a76eb81960c1d790a"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-15T00:00:00.000Z"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 300
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некоректні дані",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Amount must be between 1 and 5000ml."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Відсутній токен авторизації",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запис не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water record",
+        "operationId": "deleteWaterRecord",
+        "description": "Дані для видалення нового запису про воду",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully deleted a water record!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully deleted a water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "description": "User's id",
+                          "type": "string",
+                          "example": "675da24a76eb81960c1d790a"
+                        },
+                        "amount": {
+                          "description": "Amount of water in milliliters",
+                          "type": "number",
+                          "example": 200
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Amount must be between 1 and 5000 ml.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Amount must be between 1 and 5000 ml."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "An error occurred while processing the request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/water-rate": {
+      "patch": {
+        "tags": [
+          "Water rate"
+        ],
+        "summary": "Update user's daily water intake by id",
+        "operationId": "waterRate",
+        "description": "Updates the amount of water the user should consume daily and saves this value in the user`s profile. The maximum daily intake limit is 5000 ml.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "daylyNorm"
+                ],
+                "properties": {
+                  "daylyNorm": {
+                    "description": "New daily water intake amount (in milliliters). The maximum allowed value is 5000 ml.",
+                    "type": "number",
+                    "example": 2000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updates the amount of water the user should consume daily",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated daily norm for user with id ${userId}!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/patchInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -466,7 +1100,8 @@
       "userInfo": {
         "type": "object",
         "required": [
-          "userId"
+          "userId",
+          "daylyNorm"
         ],
         "properties": {
           "userId": {
@@ -507,8 +1142,8 @@
           },
           "daylyNorm": {
             "description": "Dayly norm user",
-            "type": "string",
-            "example": "15000ml"
+            "type": "number",
+            "example": 2000
           }
         }
       },
@@ -521,13 +1156,13 @@
             "example": "65e4decdd286b30065d54af9"
           },
           "name": {
-            "description": "Contact's name",
+            "description": "User name",
             "type": "string",
             "maxLength": 32,
             "example": "John Doe"
           },
           "email": {
-            "description": "Contact's email",
+            "description": "User email",
             "type": "string",
             "example": "swagger@gmail.com"
           },
@@ -545,6 +1180,16 @@
               "female"
             ],
             "example": "female"
+          },
+          "avatarUrl": {
+            "description": "user avatar",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+          },
+          "daylyNorm": {
+            "description": "User dayly norm",
+            "type": "number",
+            "example": 2000
           }
         }
       }
