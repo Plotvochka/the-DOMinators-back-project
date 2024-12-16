@@ -42,6 +42,6 @@ responses:
               example: Successfully update to user avatar!
             data:
               type: object
-              $ref: ../../../components/schemas/patchInfoSchema.yaml
+              $ref: ../../../components/schemas/patchUserAvatarSchema.yaml
   '401':
     $ref: ../../../components/responses/401.yaml

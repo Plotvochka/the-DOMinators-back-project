@@ -27,11 +27,15 @@ export const patchAvatarUser = async(req, res, next) => {
   const result = await userInfoServices.avatarUserServices(
     userId,
     avatarUrl);
+    
 
   res.json({
     status: 200,
     message: 'Successfully upserted a user avatar!',
-    data: result,
+    data: {
+     _id: result._id,
+     avatarUrl: result.avatarUrl,
+    },
   });
 };
 
