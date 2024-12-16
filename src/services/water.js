@@ -1,11 +1,12 @@
 import WaterCollection from '../db/models/Water.js';
 
-export const addWaterRecord = async (userId, amount) => {
-  if (amount > 5000 || amount <= 0) {
+export const addWaterRecord = async (payload) => {
+  // changed
+  if (payload.amount > 5000 || payload.amount <= 0) {
     throw new Error('Amount must be between 1 and 5000ml.');
   }
 
-  const newRecord = await WaterCollection.create({ userId, amount });
+  const newRecord = await WaterCollection.create(payload);
   return newRecord;
 };
 
@@ -36,3 +37,5 @@ export const deleteWaterRecord = async (userId) => {
 
   return deletedRecord;
 };
+export const getWaterConsamption = (startofDayQuery, endofDayQuery) =>
+  WaterCollection.find().where('date').gte(startofDayQuery).lte(endofDayQuery);

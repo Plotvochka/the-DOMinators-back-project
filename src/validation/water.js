@@ -1,8 +1,9 @@
 import Joi from 'joi';
 
 export const addWaterRecordSchema = Joi.object({
-  userId: Joi.string().required(),
+  // userId: Joi.string().required(),
   amount: Joi.number().required().min(1).max(50000),
+  date: Joi.string().isoDate().required(),
 });
 
 export const updateWaterRecordSchema = Joi.object({

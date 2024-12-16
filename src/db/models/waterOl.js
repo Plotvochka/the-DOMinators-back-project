@@ -19,10 +19,10 @@ const waterConsumptionSchema = new Schema(
     //   required: true,
     // },
   },
-  // {
-  //   timestamps: true,
-  //   versionKey: false,
-  // },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
 );
 
 const WaterCollection = model('water', waterConsumptionSchema);
