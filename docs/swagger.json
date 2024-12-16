@@ -229,8 +229,8 @@
                       "example": "User not found"
                     },
                     "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/auth"
+                      "type": "string",
+                      "example": "User not found"
                     }
                   }
                 }
@@ -284,8 +284,8 @@
                       "example": "Session not found"
                     },
                     "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/auth"
+                      "type": "string",
+                      "example": "Session  not found"
                     }
                   }
                 }
