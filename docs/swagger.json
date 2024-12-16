@@ -526,7 +526,7 @@
         }
       }
     },
-    "/users/{userId}:avatarUrl": {
+    "/users/{userId}/avatarUrl": {
       "patch": {
         "tags": [
           "User"
@@ -589,7 +589,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/patchInfoSchema"
+                      "$ref": "#/components/schemas/patchUserAvatarSchema"
                     }
                   }
                 }
@@ -1181,15 +1181,25 @@
             ],
             "example": "female"
           },
-          "avatarUrl": {
-            "description": "user avatar",
-            "type": "string",
-            "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
-          },
           "daylyNorm": {
             "description": "User dayly norm",
             "type": "number",
             "example": 2000
+          }
+        }
+      },
+      "patchUserAvatarSchema": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "description": "User id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "avatarUrl": {
+            "description": "user avatar",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
           }
         }
       }
