@@ -13,26 +13,26 @@ import {
 } from '../controllers/auth.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 
-const router = Router();
+const authRouter = Router();
 
-router.post(
+authRouter.post(
   '/signup',
   validateBody(registrUserSchema),
   ctrlWrapper(createUserController),
 );
 
-router.post(
+authRouter.post(
   '/signin',
   validateBody(loginUserSchema),
   ctrlWrapper(logInUserController),
 );
 
-router.post('/logout', ctrlWrapper(logOutUserController));
+authRouter.post('/logout', ctrlWrapper(logOutUserController));
 
-router.post(
+authRouter.post(
   '/request-reset-pwd',
   validateBody(requestresetPasswordSchema),
   ctrlWrapper(requestResetEmailController),
 );
 
-export default router;
+export default authRouter;

@@ -1,0 +1,20 @@
+type: object
+required:
+  - userId
+  - date
+  - amount
+properties:
+  userId:
+    description: 'ID of the user who is logging water intake'
+    type: string
+    example: '65e4decdd286b30065d54af9'
+  date:
+    description: 'Date when the water intake was logged'
+    type: string
+    format: date-time
+    example: '2024-12-15T12:34:56.789Z'
+  amount:
+    description: 'Amount of water intake in milliliters'
+    type: number
+    maximum: 5000
+    example: 200

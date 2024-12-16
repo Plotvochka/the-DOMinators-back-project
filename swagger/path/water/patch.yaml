@@ -1,0 +1,100 @@
+tags:
+  - Water
+summary: Update water record
+operationId: updateWaterRecord
+description: 'Оновлення запису про воду для користувача'
+security:
+  - bearerAuth: []
+parameters:
+  - name: userId
+    in: path
+    required: true
+    description: 'ID користувача, для якого потрібно оновити запис'
+    schema:
+      type: string
+      example: '675da24a76eb81960c1d790a'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - amount
+        properties:
+          date:
+            description: 'Дата запису (ISO формат)'
+            type: string
+            format: date-time
+            example: '2024-12-15T00:00:00.000Z'
+          amount:
+            description: 'Кількість води у мілілітрах'
+            type: number
+            minimum: 1
+            maximum: 5000
+            example: 200
+responses:
+  200:
+    description: Успішно оновлено
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 200
+            message:
+              type: string
+              example: 'Successfully updated the water record!'
+            data:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: '675da24a76eb81960c1d790a'
+                date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-15T00:00:00.000Z'
+                amount:
+                  type: number
+                  example: 300
+  400:
+    description: Некоректні дані
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 400
+            message:
+              type: string
+              example: 'Amount must be between 1 and 5000ml.'
+  404:
+    description: Запис не знайдено
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 404
+            message:
+              type: string
+              example: 'Record not found!'
+  401:
+    description: Відсутній токен авторизації
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 401
+            message:
+              type: string
+              example: 'Unauthorized'

@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import router from './routers/auth.js';
+import authRouter from './routers/auth.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import userInfoRouter from './routers/userInfo.js';
@@ -25,7 +25,7 @@ export const startServer = () => {
 
   app.use('/api-docs', swaggerDocs());
 
-  app.use(router);
+  app.use(authRouter);
   app.use(userInfoRouter);
   app.use(waterRouter);
 
