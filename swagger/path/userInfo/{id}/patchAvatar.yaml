@@ -17,11 +17,16 @@ requestBody:
     multipart/form-data:
       schema:
         type: object
+        required: 
+          -  token
         properties:
           avatarUrl:
             description: "User Avatar"
             type: string
             example: 'https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg'
+          token:
+            description: "User token"
+            type: string
 responses:
   '200':
     description: Update a avatar
