@@ -13,7 +13,6 @@ requestBody:
         required:
           - email
           - password
-          - repeatPassword
         properties:
           email:
             description: 'User`s email'
@@ -21,10 +20,6 @@ requestBody:
             example: 'asdaf22@gmail.com'
           password:
             description: 'The password chosen by the user(min. 8 characters max. 64 characters) '
-            type: string
-            example: '12345678'
-          repeatPassword:
-            description: 'Repetition of the password chosen by the user'
             type: string
             example: '12345678'
 responses:

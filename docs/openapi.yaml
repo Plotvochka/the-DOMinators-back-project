@@ -14,7 +14,6 @@ tags:
   - name: Water
     description: Operations with water.
 servers:
-  - url: http://localhost:3000
   - url: https://the-dominators-back-project.onrender.com
 paths:
   /signup:

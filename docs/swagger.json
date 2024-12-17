@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://the-dominators-back-project.onrender.com"
     }
   ],
@@ -52,8 +49,7 @@
                 "type": "object",
                 "required": [
                   "email",
-                  "password",
-                  "repeatPassword"
+                  "password"
                 ],
                 "properties": {
                   "email": {
@@ -63,11 +59,6 @@
                   },
                   "password": {
                     "description": "The password chosen by the user(min. 8 characters max. 64 characters) ",
-                    "type": "string",
-                    "example": "12345678"
-                  },
-                  "repeatPassword": {
-                    "description": "Repetition of the password chosen by the user",
                     "type": "string",
                     "example": "12345678"
                   }
@@ -993,7 +984,7 @@
     "/users/{userId}/water-rate": {
       "patch": {
         "tags": [
-          "Water rate"
+          "User"
         ],
         "summary": "Update user's daily water intake by id",
         "operationId": "waterRate",

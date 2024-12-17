@@ -1,5 +1,5 @@
 tags:
-  - Water rate
+  - User
 summary: Update user's daily water intake by id
 operationId: waterRate
 description: 'Updates the amount of water the user should consume daily and saves this value in the user`s profile. The maximum daily intake limit is 5000 ml.'
