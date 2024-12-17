@@ -8,12 +8,13 @@ import {
   addWaterRecordSchema,
   updateWaterRecordSchema,
   deleteWaterRecordSchema,
+  monthlyWaterStatsSchema,
 } from '../validation/water.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
 const waterRouter = Router();
 
-waterRouter.use(authenticate);
+waterRouter.use(authenticate); // !!!
 
 waterRouter.post(
   '/water',
@@ -39,4 +40,10 @@ waterRouter.get(
   '/water/today',
   ctrlWrapper(waterController.getWaterConsumptionController),
 );
+waterRouter.get(
+  '/water/month',
+  validateBody(monthlyWaterStatsSchema),
+  ctrlWrapper(waterController.getMonthlyWaterConsumptionController),
+);
+
 export default waterRouter;

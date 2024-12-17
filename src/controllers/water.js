@@ -1,4 +1,5 @@
 import * as waterService from '../services/water.js';
+import { monthlyWaterStatsSchema } from '../validation/water.js';
 
 export const addWaterRecord = async (req, res, next) => {
   // changed
@@ -60,35 +61,88 @@ export const deleteWaterRecord = async (req, res, next) => {
   }
 };
 export const getWaterConsumptionController = async (req, res) => {
-  console.log(req.user);
-  const { _id: userId } = req.user;
-  const dailyWaterGoal = 2000;
+  const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
   const endOfDay = new Date();
   endOfDay.setHours(23, 59, 59, 999);
   const startofDayQuery = startOfDay.toISOString().slice(0, 16);
   const endofDayQuery = endOfDay.toISOString().slice(0, 16);
-  console.log(startofDayQuery);
-  console.log(endofDayQuery);
-
-  const data = await waterService.getWaterConsamption(
-    startofDayQuery,
-    endofDayQuery,
-    userId,
-  );
+  const filter = {
+    userId: userId,
+    startofDayQuery: startofDayQuery,
+    endofDayQuery: endofDayQuery,
+  };
+  const data = await waterService.getWaterConsamption(filter);
   const totalWaterConsumed = data.reduce(
     (sum, record) => sum + record.amount,
     0,
   );
   const percentageOfGoal = Math.round(
-    (totalWaterConsumed / dailyWaterGoal) * // user.dailyWaterGoal
-      100,
+    (totalWaterConsumed / dailyWaterGoal) * 100,
   );
   res.json({
     status: 200,
     message: 'Successfully found data!',
     percentageOfGoal,
     records: data,
+  });
+};
+export const getMonthlyWaterConsumptionController = async (req, res) => {
+  const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
+  const { month, year } = req.body;
+
+  const { error } = monthlyWaterStatsSchema.validate({ month, year });
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
+  const startOfMonth = new Date(year, month - 1, 1);
+  const endOfMonth = new Date(year, month, 0);
+  endOfMonth.setHours(23, 59, 59, 999);
+
+  const startofMonthQuery = startOfMonth.toISOString().slice(0, 16);
+  const endofMonthQuery = endOfMonth.toISOString().slice(0, 16);
+  const filter = {
+    startofMonthQuery: startofMonthQuery,
+    endofMonthQuery: endofMonthQuery,
+    userId: userId,
+  };
+
+  // Пошук записів за місяць
+  const waterMonthRecords = await waterService.getMonthlyWaterConsamption(
+    filter,
+  );
+  const dailyStats = {};
+
+  waterMonthRecords.forEach((record) => {
+    const dateKey = record.date.split('T')[0];
+    if (!dailyStats[dateKey]) {
+      dailyStats[dateKey] = { totalAmount: 0, count: 0 };
+    }
+    dailyStats[dateKey].totalAmount += record.amount;
+    dailyStats[dateKey].count += 1;
+  });
+  console.log('dailyStats: ', dailyStats);
+  const stats = Object.entries(dailyStats).map(([date, data]) => {
+    const formattedDate = new Date(date);
+    const day = formattedDate.getDate();
+    const monthName = formattedDate.toLocaleString('default', {
+      month: 'long',
+    });
+    return {
+      date: `${day}, ${monthName}`,
+      dailyGoal: `${(dailyWaterGoal / 1000).toFixed(1)} L`,
+      percentageOfGoal: `${Math.round(
+        (data.totalAmount / dailyWaterGoal) * 100,
+      )}%`,
+      recordsCount: data.count,
+    };
+  });
+  console.log('Monthly statistic', stats);
+  res.json({
+    status: 200,
+    message: 'Successfully found data!',
+    data: stats,
   });
 };

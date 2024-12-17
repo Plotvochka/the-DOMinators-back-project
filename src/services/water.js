@@ -37,5 +37,29 @@ export const deleteWaterRecord = async (userId) => {
 
   return deletedRecord;
 };
-export const getWaterConsamption = (startofDayQuery, endofDayQuery) =>
-  WaterCollection.find().where('date').gte(startofDayQuery).lte(endofDayQuery);
+export const getWaterConsamption = async (filter) => {
+  const query = WaterCollection.find();
+  if (filter.startofDayQuery && filter.endofDayQuery) {
+    query.where('date').gte(filter.startofDayQuery).lte(filter.endofDayQuery);
+  }
+  if (filter.userId) {
+    query.where('userId').equals(filter.userId);
+  }
+  const data = await query;
+  return data;
+};
+
+export const getMonthlyWaterConsamption = async (filter) => {
+  const query = WaterCollection.find();
+  if (filter.startofMonthQuery && filter.endofMonthQuery) {
+    query
+      .where('date')
+      .gte(filter.startofMonthQuery)
+      .lte(filter.endofMonthQuery);
+  }
+  if (filter.userId) {
+    query.where('userId').equals(filter.userId);
+  }
+  const data = await query;
+  return data;
+};

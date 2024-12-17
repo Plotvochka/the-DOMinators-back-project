@@ -10,8 +10,8 @@ import { env } from '../utils/env.js';
 const enableCloudinary = env('ENABLE_CLOUDINARY');
 
 export const patchAvatarUser = async (req, res, next) => {
-  const { userId } = req.params;
-
+  // const { userId } = req.params;
+  const { _id: userId } = req.user;
   let avatarUrl = null;
 
   if (req.file) {
