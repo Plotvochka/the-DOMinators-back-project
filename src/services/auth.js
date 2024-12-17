@@ -31,7 +31,7 @@ export const singInUser = async (payload) => {
   if (!user) throw createHttpError(404, 'User not found');
 
   const isEqual = await bcrypt.compare(payload.password, user.password);
-  if (!isEqual) throw createHttpError(401, 'Invalid email or password');
+  if (!isEqual) throw createHttpError(401, 'Invalid email or password'); //це для нас не потрібно, це має зробити фронт чисто для себе і для користувача
 
   await SessionCollection.deleteOne({ userId: user._id });
 

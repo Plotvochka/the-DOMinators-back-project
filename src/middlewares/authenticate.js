@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import UsersCollection from '../db/models/UserInfo.js';
+import { UserInfoCollection } from '../db/models/UserInfo.js';
 import { SessionCollection } from '../db/models/session.js';
 
 export const authenticate = async (req, res, next) => {
@@ -38,7 +38,7 @@ export const authenticate = async (req, res, next) => {
   // const sessions = await SessionCollection.find({});
   // console.log('Sessions:', sessions);
 
-  const user = await UsersCollection.findById(session.userId);
+  const user = await UserInfoCollection.findById(session.userId);
 
   if (!user) {
     next(createHttpError(401));
