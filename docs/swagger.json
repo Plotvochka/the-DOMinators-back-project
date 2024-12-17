@@ -1090,7 +1090,7 @@
             "type": "string",
             "example": "OioqpFgc2CZTitJcn34zwveb3APOFY9fRJ8/2qyZ"
           },
-          "userId": {
+          "_id": {
             "description": "User`s id",
             "type": "string",
             "example": "676149eafa93bf3739471011"
