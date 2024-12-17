@@ -4,7 +4,22 @@ import {
   singUpUser,
   logOutUser,
   requestResetToken,
+  refreshUserSession,
 } from '../services/auth.js';
+
+const setupSession = (res, session) => {
+  const { _id, refreshToken, refreshTokenValidUntil } = session;
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    expires: refreshTokenValidUntil,
+  });
+
+  res.cookie('sessionId', _id, {
+    httpOnly: true,
+    expires: refreshTokenValidUntil,
+  });
+};
 
 export const createUserController = async (req, res) => {
   const User = await singUpUser(req.body);
@@ -54,5 +69,19 @@ export const requestResetEmailController = async (req, res) => {
     message: 'Reset password email was successfully sent!',
     status: 200,
     data: {},
+  });
+};
+
+export const refreshSessionController = async (req, res) => {
+  const session = await refreshUserSession(req.cookies);
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refresh session',
+    data: {
+      accessToken: session.accessToken,
+    },
   });
 };
