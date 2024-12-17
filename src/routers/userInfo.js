@@ -4,11 +4,14 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 import isValidId from '../middlewares/isValidId.js';
 import validateBody from '../middlewares/validateBody.js';
 import { upload } from '../middlewares/multer.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 import * as userInfoController from '../controllers/userInfo.js';
 import * as userValidation from '../validation/user.js';
 
 const userInfoRouter = Router();
+
+userInfoRouter.use(authenticate);
 
 userInfoRouter.patch(
   '/users/:userId/avatarUrl',

@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
-import { UsersCollection } from '../db/models/user';
-import { SessionCollection } from '../db/models/session';
+import UsersCollection from '../db/models/UserInfo.js';
+import { SessionCollection } from '../db/models/session.js';
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization');
@@ -35,8 +35,8 @@ export const authenticate = async (req, res, next) => {
     return;
   }
 
-  const sessions = await SessionCollection.find({});
-  console.log('Sessions:', sessions);
+  // const sessions = await SessionCollection.find({});
+  // console.log('Sessions:', sessions);
 
   const user = await UsersCollection.findById(session.userId);
 
