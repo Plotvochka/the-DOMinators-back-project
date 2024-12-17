@@ -3,11 +3,11 @@ required:
   - email
   - password
 properties:
-  email:
-    description: 'User`s email'
+  accessToken:
+    description: 'User`s token'
     type: string
-    example: 'asflb354@gmail.com'
-  password:
-    description: 'User`s password'
+    example: 'OioqpFgc2CZTitJcn34zwveb3APOFY9fRJ8/2qyZ'
+  userId:
+    description: 'User`s id'
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: 676149eafa93bf3739471011
