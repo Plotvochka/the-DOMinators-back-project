@@ -1,0 +1,23 @@
+type: object
+required:
+  - _id
+  - userId
+  - date
+  - amount
+properties:
+  _id:
+    description: "Water record's id"
+    type: string
+    example: '675f5414f80db4b17077298d'
+  userId:
+    description: "Record owner's id"
+    type: string
+    example: '675f4b2b2220f01921fa703a'
+  date:
+    description: 'Recording date'
+    type: string
+    example: '2024-12-17T12:10'
+  amount:
+    description: 'Amount of water consumed in milliliters'
+    type: number
+    example: 250

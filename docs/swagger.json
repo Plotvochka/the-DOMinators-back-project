@@ -981,6 +981,131 @@
         }
       }
     },
+    "/water/today": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water consumption list for today",
+        "operationId": "getWaterConsumptionToday",
+        "description": "Get a list of water consumption records for today",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found movies!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "percentageOfGoal",
+                    "recotds"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found data!"
+                    },
+                    "percentageOfGoal": {
+                      "type": "number",
+                      "example": 35
+                    },
+                    "recotds": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/singleWaterRecord"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water consumption list for month",
+        "operationId": "getWaterConsumptionForMonth",
+        "description": "Get a list of water consumption records for month",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer",
+              "example": 2024
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found data!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found movies!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/waterOneDayInfo"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/users/{userId}/water-rate": {
       "patch": {
         "tags": [
@@ -1191,6 +1316,68 @@
             "description": "user avatar",
             "type": "string",
             "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+          }
+        }
+      },
+      "singleWaterRecord": {
+        "type": "object",
+        "required": [
+          "_id",
+          "userId",
+          "date",
+          "amount"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Water record's id",
+            "type": "string",
+            "example": "675f5414f80db4b17077298d"
+          },
+          "userId": {
+            "description": "Record owner's id",
+            "type": "string",
+            "example": "675f4b2b2220f01921fa703a"
+          },
+          "date": {
+            "description": "Recording date",
+            "type": "string",
+            "example": "2024-12-17T12:10"
+          },
+          "amount": {
+            "description": "Amount of water consumed in milliliters",
+            "type": "number",
+            "example": 250
+          }
+        }
+      },
+      "waterOneDayInfo": {
+        "type": "object",
+        "required": [
+          "date",
+          "dailyGoal",
+          "percentageOfGoal",
+          "recordsCount"
+        ],
+        "properties": {
+          "date": {
+            "description": "day and month",
+            "type": "string",
+            "example": "15, December"
+          },
+          "dailyGoal": {
+            "description": "Daily water consumption in liters",
+            "type": "string",
+            "example": "1.8 L"
+          },
+          "percentageOfGoal": {
+            "description": "Percentage of daily water consumption",
+            "type": "string",
+            "example": "24%"
+          },
+          "recordsCount": {
+            "description": "Number of water consumption records per day",
+            "type": "number",
+            "example": 4
           }
         }
       }
