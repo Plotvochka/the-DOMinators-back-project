@@ -29,12 +29,12 @@ paths:
   /request-reset-pwd:
     post:
       $ref: ../swagger/path/auth/request-reset-pwd.yaml
-  /users/{userId}:
+  /users:
     get:
       $ref: ../swagger/path/userInfo/{id}/get.yaml
     patch:
       $ref: ../swagger/path/userInfo/{id}/patch.yaml
-  /users/{userId}/avatarUrl:
+  /users/avatarUrl:
     patch:
       $ref: ../swagger/path/userInfo/{id}/patchAvatar.yaml
 

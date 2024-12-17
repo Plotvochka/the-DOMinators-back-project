@@ -10,7 +10,7 @@ import { env } from '../utils/env.js';
 const enableCloudinary = env('ENABLE_CLOUDINARY');
 
 export const patchAvatarUser = async (req, res, next) => {
-  const { userId } = req.params;
+  const { _id: userId } = req.user;
 
   let avatarUrl = null;
 
@@ -37,11 +37,7 @@ export const patchAvatarUser = async (req, res, next) => {
 };
 
 export const getUserInfoController = async (req, res, next) => {
-  const { userId } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    throw createHttpError(404, 'User not found');
-  }
+  const { _id: userId } = req.user;
 
   const data = await userInfoServices.getUserInfo(userId);
 
@@ -58,7 +54,7 @@ export const getUserInfoController = async (req, res, next) => {
 };
 
 export const patchUserInfoController = async (req, res, next) => {
-  const { userId } = req.params;
+  const { _id: userId } = req.user;
 
   const result = await userInfoServices.updateUserInfo(userId, req.body);
 
