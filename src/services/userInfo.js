@@ -8,8 +8,7 @@ export const avatarUserServices = (userId, avatarUrl) => {
   );
 };
 
-export const getUserInfo = ({ userId }) =>
-  UserInfoCollection.findOne({ userId });
+export const getUserInfo = (userId) => UserInfoCollection.findById(userId);
 
 export const updateUserInfo = async (userId, payload, options = {}) => {
   const rawResult = await UserInfoCollection.findOneAndUpdate(
