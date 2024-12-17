@@ -24,11 +24,17 @@ const userInfoSchema = new Schema(
     },
     avatarUrl: {
       type: String,
-      default: "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+      default:
+        'https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg',
     },
   },
   { timestamps: true, versionKey: false },
 );
+userInfoSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 const UserInfoCollection = model('users', userInfoSchema);
 
