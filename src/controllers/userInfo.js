@@ -30,8 +30,8 @@ export const patchAvatarUser = async (req, res, next) => {
     status: 200,
     message: 'Successfully upserted a user avatar!',
     data: {
-     _id: result._id,
-     avatarUrl: result.avatarUrl,
+      _id: result._id,
+      avatarUrl: result.avatarUrl,
     },
   });
 };
@@ -81,8 +81,8 @@ export const updateUserDaylyNorm = async (req, res, next) => {
     throw createHttpError(404, 'User not found');
   }
 
-  if (daylyNorm > 15000 || daylyNorm < 0) {
-    throw createHttpError(400, 'Daily norm must be between 0 and 15000ml.');
+  if (daylyNorm > 5000 || daylyNorm < 0) {
+    throw createHttpError(400, 'Daily norm must be between 0 and 5000ml.');
   }
 
   try {
