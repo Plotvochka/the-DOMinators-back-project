@@ -70,7 +70,8 @@ export const patchUserInfoController = async (req, res, next) => {
 };
 
 export const updateUserDaylyNorm = async (req, res, next) => {
-  const { userId } = req.params;
+  // const { userId } = req.params;
+  const { _id: userId } = req.user;
   const { daylyNorm } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {

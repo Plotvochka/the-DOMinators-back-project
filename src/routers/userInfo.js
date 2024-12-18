@@ -31,7 +31,7 @@ userInfoRouter.patch(
 );
 
 userInfoRouter.patch(
-  '/users/:userId/water-rate',
+  '/users/water-rate',
   validateBody(userValidation.waterRateUserSchema),
   ctrlWrapper(userInfoController.updateUserDaylyNorm),
 );

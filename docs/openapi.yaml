@@ -36,6 +36,9 @@ paths:
   /users/avatarUrl:
     patch:
       $ref: ../swagger/path/userInfo/{id}/patchAvatar.yaml
+  /users/water-rate:
+    patch:
+      $ref: ../swagger/path/userInfo/{id}/patchWaterRate.yaml
 
   /water:
     post:
@@ -51,9 +54,6 @@ paths:
   /water/month:
     get:
       $ref: ../swagger/path/water/month/get.yaml
-  /users/{userId}/water-rate:
-    patch:
-      $ref: ../swagger/path/userInfo/{id}/patchWaterRate.yaml
 
 components:
   securitySchemes:
