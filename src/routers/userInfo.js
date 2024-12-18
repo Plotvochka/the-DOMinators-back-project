@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import ctrlWrapper from '../utils/ctrlWrapper.js';
-import isValidId from '../middlewares/isValidId.js';
 import validateBody from '../middlewares/validateBody.js';
 import { upload } from '../middlewares/multer.js';
 import { authenticate } from '../middlewares/authenticate.js';
@@ -14,29 +13,25 @@ const userInfoRouter = Router();
 userInfoRouter.use(authenticate);
 
 userInfoRouter.patch(
-  '/users/:userId/avatarUrl',
-  isValidId,
+  '/users/avatarUrl',
   upload.single('avatarUrl'),
   validateBody(userValidation.avatarUserSchema),
   ctrlWrapper(userInfoController.patchAvatarUser),
 );
 
 userInfoRouter.get(
-  '/users/:userId',
-  isValidId,
+  '/users',
   ctrlWrapper(userInfoController.getUserInfoController),
 );
 
 userInfoRouter.patch(
-  '/users/:userId',
-  isValidId,
+  '/users',
   validateBody(userValidation.updateUserInfoSchema),
   ctrlWrapper(userInfoController.patchUserInfoController),
 );
 
 userInfoRouter.patch(
   '/users/:userId/water-rate',
-  isValidId,
   validateBody(userValidation.waterRateUserSchema),
   ctrlWrapper(userInfoController.updateUserDaylyNorm),
 );

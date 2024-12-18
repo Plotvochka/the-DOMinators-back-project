@@ -5,18 +5,13 @@ operationId: patchUserInfo
 description: 'Update a user info with payload'
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: userId
-    required: true
-    schema:
-      type: string
-      example: '65ca67e7ae7f10c88b598384'
 requestBody:
   content:
     application/json:
       schema:
         type: object
+        required: 
+          -  token
         properties:
           name:
             description: 'User name'
@@ -40,6 +35,9 @@ requestBody:
             description: 'User gender'
             type: string
             enum: ['male', 'female']
+          token:
+            description: "User token"
+            type: string
 responses:
   '200':
     description: Update a user
