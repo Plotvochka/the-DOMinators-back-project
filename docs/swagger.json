@@ -358,7 +358,7 @@
         }
       }
     },
-    "/users/{userId}": {
+    "/users": {
       "get": {
         "tags": [
           "User"
@@ -369,17 +369,6 @@
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
           }
         ],
         "responses": {
@@ -429,22 +418,14 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "token"
+                ],
                 "properties": {
                   "name": {
                     "description": "User name",
@@ -475,6 +456,10 @@
                       "male",
                       "female"
                     ]
+                  },
+                  "token": {
+                    "description": "User token",
+                    "type": "string"
                   }
                 }
               }
@@ -517,7 +502,7 @@
         }
       }
     },
-    "/users/{userId}/avatarUrl": {
+    "/users/avatarUrl": {
       "patch": {
         "tags": [
           "User"
@@ -530,27 +515,23 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "token"
+                ],
                 "properties": {
                   "avatarUrl": {
                     "description": "User Avatar",
                     "type": "string",
                     "example": "https://res.cloudinary.com/dbs7urwoj/image/upload/v1734265734/photos/b6upxgpbaacbcw5jw0fb.svg"
+                  },
+                  "token": {
+                    "description": "User token",
+                    "type": "string"
                   }
                 }
               }
