@@ -37,7 +37,7 @@ export const deleteWaterRecord = async (userId) => {
 
   return deletedRecord;
 };
-export const getWaterConsamption = async (filter) => {
+export const getWaterConsamption = async (filter, sortBy, sortOrder) => {
   const query = WaterCollection.find();
   if (filter.startofDayQuery && filter.endofDayQuery) {
     query.where('date').gte(filter.startofDayQuery).lte(filter.endofDayQuery);
@@ -45,11 +45,11 @@ export const getWaterConsamption = async (filter) => {
   if (filter.userId) {
     query.where('userId').equals(filter.userId);
   }
-  const data = await query;
+  const data = await query.sort({ [sortBy]: sortOrder });
   return data;
 };
 
-export const getMonthlyWaterConsamption = async (filter) => {
+export const getMonthlyWaterConsamption = async (filter, sortBy, sortOrder) => {
   const query = WaterCollection.find();
   if (filter.startofMonthQuery && filter.endofMonthQuery) {
     query
@@ -60,6 +60,6 @@ export const getMonthlyWaterConsamption = async (filter) => {
   if (filter.userId) {
     query.where('userId').equals(filter.userId);
   }
-  const data = await query;
+  const data = await query.sort({ [sortBy]: sortOrder });
   return data;
 };

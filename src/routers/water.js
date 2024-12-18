@@ -8,7 +8,6 @@ import {
   addWaterRecordSchema,
   updateWaterRecordSchema,
   deleteWaterRecordSchema,
-  monthlyWaterStatsSchema,
 } from '../validation/water.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -42,7 +41,6 @@ waterRouter.get(
 );
 waterRouter.get(
   '/water/month',
-  validateBody(monthlyWaterStatsSchema),
   ctrlWrapper(waterController.getMonthlyWaterConsumptionController),
 );
 

@@ -1,5 +1,5 @@
 import * as waterService from '../services/water.js';
-import { monthlyWaterStatsSchema } from '../validation/water.js';
+import { parseWaterFilterParams } from '../utils/parseWaterFilterParams.js';
 
 export const addWaterRecord = async (req, res, next) => {
   // changed
@@ -62,6 +62,8 @@ export const deleteWaterRecord = async (req, res, next) => {
 };
 export const getWaterConsumptionController = async (req, res) => {
   const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
+  const sortBy = 'date';
+  const sortOrder = 'asc';
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
   const endOfDay = new Date();
@@ -73,7 +75,11 @@ export const getWaterConsumptionController = async (req, res) => {
     startofDayQuery: startofDayQuery,
     endofDayQuery: endofDayQuery,
   };
-  const data = await waterService.getWaterConsamption(filter);
+  const data = await waterService.getWaterConsamption(
+    filter,
+    sortBy,
+    sortOrder,
+  );
   const totalWaterConsumed = data.reduce(
     (sum, record) => sum + record.amount,
     0,
@@ -90,15 +96,13 @@ export const getWaterConsumptionController = async (req, res) => {
 };
 export const getMonthlyWaterConsumptionController = async (req, res) => {
   const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
-  const { month, year } = req.body;
+  const { month, year } = req.query;
+  const { parsedYear, parsedMonth } = parseWaterFilterParams(month, year);
+  const sortBy = 'date';
+  const sortOrder = 'asc';
 
-  const { error } = monthlyWaterStatsSchema.validate({ month, year });
-  if (error) {
-    return res.status(400).json({ message: error.details[0].message });
-  }
-
-  const startOfMonth = new Date(year, month - 1, 1);
-  const endOfMonth = new Date(year, month, 0);
+  const startOfMonth = new Date(parsedYear, parsedMonth - 1, 1);
+  const endOfMonth = new Date(parsedYear, parsedMonth, 0);
   endOfMonth.setHours(23, 59, 59, 999);
 
   const startofMonthQuery = startOfMonth.toISOString().slice(0, 16);
@@ -108,10 +112,12 @@ export const getMonthlyWaterConsumptionController = async (req, res) => {
     endofMonthQuery: endofMonthQuery,
     userId: userId,
   };
-
+  console.log('filter: ', filter);
   // Пошук записів за місяць
   const waterMonthRecords = await waterService.getMonthlyWaterConsamption(
     filter,
+    sortBy,
+    sortOrder,
   );
   const dailyStats = {};
 
