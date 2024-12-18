@@ -1,0 +1,23 @@
+type: object
+required:
+  - date
+  - dailyGoal
+  - percentageOfGoal
+  - recordsCount
+properties:
+  date:
+    description: 'day and month'
+    type: string
+    example: '15, December'
+  dailyGoal:
+    description: 'Daily water consumption in liters'
+    type: string
+    example: '1.8 L'
+  percentageOfGoal:
+    description: 'Percentage of daily water consumption'
+    type: string
+    example: '24%'
+  recordsCount:
+    description: 'Number of water consumption records per day'
+    type: number
+    example: 4

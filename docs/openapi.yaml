@@ -45,7 +45,12 @@ paths:
       $ref: ../swagger/path/water/patch.yaml
     delete:
       $ref: ../swagger/path/water/delete.yaml
-
+  /water/today:
+    get:
+      $ref: ../swagger/path/water/today/get.yaml
+  /water/month:
+    get:
+      $ref: ../swagger/path/water/month/get.yaml
   /users/{userId}/water-rate:
     patch:
       $ref: ../swagger/path/userInfo/{id}/patchWaterRate.yaml

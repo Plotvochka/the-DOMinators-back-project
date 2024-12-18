@@ -1,0 +1,35 @@
+tags:
+  - Water
+summary: Get water consumption list for today
+operationId: getWaterConsumptionToday
+description: 'Get a list of water consumption records for today'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully found movies!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - percentageOfGoal
+            - recotds
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found data!
+            percentageOfGoal:
+              type: number
+              example: 35
+            recotds:
+              type: array
+              items:
+                $ref: '../../../components/schemas/singleWaterRecord.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'

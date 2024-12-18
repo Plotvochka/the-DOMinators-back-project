@@ -1,0 +1,43 @@
+tags:
+  - Water
+summary: Get water consumption list for month
+operationId: getWaterConsumptionForMonth
+description: 'Get a list of water consumption records for month'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: month
+    schema:
+      type: integer
+    example: 1
+  - in: query
+    name: year
+    schema:
+      type: integer
+      example: 2024
+responses:
+  '200':
+    description: Successfully found data!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found movies!
+            data:
+              type: array
+              items:
+                $ref: '../../../components/schemas/waterOneDayInfo.yaml'
+
+  '401':
+    $ref: '../../../components/responses/401.yaml'
