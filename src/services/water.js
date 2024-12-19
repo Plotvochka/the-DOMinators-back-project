@@ -20,32 +20,41 @@ export const addWaterRecord = async (payload) => {
   };
 };
 
-export const updateWaterRecord = async (payload) => {
-  const { userId, date, amount } = payload;
+export const updateWaterRecord = async ({ _id, payload, options = {} }) => {
+  const data = await WaterCollection.findOneAndUpdate({ _id }, payload, {
+    ...options,
+    new: true,
+  });
 
-  if (amount > 5000 || amount <= 0) {
-    throw new Error('Amount must be between 1 and 5000ml.');
-  }
-
-  const updatedRecord = await WaterCollection.findOneAndUpdate(
-    { userId },
-    { date, amount },
-    { new: true },
-  );
-
-  if (!updatedRecord) {
-    throw new Error('Record not found!');
-  }
-
-  return updatedRecord;
+  return data;
 };
 
-export const deleteWaterRecord = async ({ _id }) => {
-  const deletedRecord = await WaterCollection.findByIdAndDelete(_id);
+export const deleteWaterRecord = (filter) =>
+  WaterCollection.findByIdAndDelete(filter);
 
-  if (!deletedRecord) {
-    throw new Error('Record not found!');
+export const getWaterConsamption = async (filter, sortBy, sortOrder) => {
+  const query = WaterCollection.find();
+  if (filter.startofDayQuery && filter.endofDayQuery) {
+    query.where('date').gte(filter.startofDayQuery).lte(filter.endofDayQuery);
   }
+  if (filter.userId) {
+    query.where('userId').equals(filter.userId);
+  }
+  const data = await query.sort({ [sortBy]: sortOrder });
+  return data;
+};
 
-  return deletedRecord;
+export const getMonthlyWaterConsamption = async (filter, sortBy, sortOrder) => {
+  const query = WaterCollection.find();
+  if (filter.startofMonthQuery && filter.endofMonthQuery) {
+    query
+      .where('date')
+      .gte(filter.startofMonthQuery)
+      .lte(filter.endofMonthQuery);
+  }
+  if (filter.userId) {
+    query.where('userId').equals(filter.userId);
+  }
+  const data = await query.sort({ [sortBy]: sortOrder });
+  return data;
 };
