@@ -25,7 +25,7 @@ requestBody:
             description: 'Дата запису (ISO формат)'
             type: string
             format: date-time
-            example: '2024-12-15T00:00:00.000Z'
+            example: '2024-12-18T18:59'
           amount:
             description: 'Кількість води у мілілітрах'
             type: number

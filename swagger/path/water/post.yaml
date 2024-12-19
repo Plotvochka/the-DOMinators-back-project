@@ -11,17 +11,12 @@ requestBody:
       schema:
         type: object
         required:
-          - userId
           - amount
         properties:
-          userId:
-            description: "User's id"
-            type: string
-            example: '675da24a76eb81960c1d790a'
           amount:
             description: 'Amount of water in milliliters'
             type: number
-            example: 2000
+            example: 200
 responses:
   '201':
     description: 'Successfully created a water record!'
@@ -43,6 +38,10 @@ responses:
             data:
               type: object
               properties:
+                id:
+                  description: "Record's id"
+                  type: string
+                  example: '6763371dbad1e7c882fcff63'
                 userId:
                   description: "User's id"
                   type: string
@@ -51,6 +50,10 @@ responses:
                   description: 'Amount of water in milliliters'
                   type: number
                   example: 2000
+                date:
+                  description: 'date when youn add record'
+                  type: string
+                  example: '2024-12-18T20:57:01.813Z'
   '400':
     description: 'Bad request. Amount must be between 1 and 5000 ml.'
     content:

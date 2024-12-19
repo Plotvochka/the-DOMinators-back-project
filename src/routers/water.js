@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../middlewares/validateBody.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 import * as waterController from '../controllers/water.js';
 import {
   addWaterRecordSchema,
   updateWaterRecordSchema,
-  deleteWaterRecordSchema,
 } from '../validation/water.js';
 
 const waterRouter = Router();
+waterRouter.use(authenticate);
 
 waterRouter.post(
   '/water',
@@ -18,14 +19,13 @@ waterRouter.post(
 );
 
 waterRouter.patch(
-  '/water/:userId',
+  '/water/user/:userId',
   validateBody(updateWaterRecordSchema),
   ctrlWrapper(waterController.updateWaterRecord),
 );
 
 waterRouter.delete(
-  '/water/:userId',
-  validateBody(deleteWaterRecordSchema),
+  '/water/record/:_id',
   ctrlWrapper(waterController.deleteWaterRecord),
 );
 
