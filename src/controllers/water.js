@@ -22,8 +22,17 @@ export const addWaterRecord = async (req, res) => {
 
 export const updateWaterRecord = async (req, res) => {
   const { id: _id } = req.params;
+  const payload = {};
+  const { amount, date } = req.body;
+  if (amount) {
+    payload.amount = amount;
+  }
+  if (date) {
+    payload.date = date.slice(0, 16);
+  }
+  console.log('payload: ', payload);
   const updatedRecord = await waterService.updateWaterRecord({
-    payload: req.body,
+    payload,
     _id,
   });
   if (!updatedRecord) {
