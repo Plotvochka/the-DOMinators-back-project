@@ -771,7 +771,7 @@
         }
       }
     },
-    "/water/user/{userId}": {
+    "/water/{userId}": {
       "patch": {
         "tags": [
           "Water"
@@ -923,9 +923,7 @@
             }
           }
         }
-      }
-    },
-    "/water/record/{_id}": {
+      },
       "delete": {
         "tags": [
           "Water"
@@ -941,7 +939,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "_id",
+            "name": "userId",
             "required": true,
             "schema": {
               "type": "string",
@@ -1056,7 +1054,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully found movies!",
+            "description": "Successfully found water!",
             "content": {
               "application/json": {
                 "schema": {
@@ -1147,7 +1145,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found movies!"
+                      "example": "Successfully found water!"
                     },
                     "data": {
                       "type": "array",

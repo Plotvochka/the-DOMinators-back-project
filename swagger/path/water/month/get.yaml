@@ -33,7 +33,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully found movies!
+              example: Successfully found water!
             data:
               type: array
               items:
