@@ -23,45 +23,34 @@ export const addWaterRecord = async (req, res, next) => {
 };
 
 export const updateWaterRecord = async (req, res, next) => {
-  try {
-    const { _id: userId } = req.user;
+  const { _id: userId } = req.user;
 
-    const updatedRecord = await waterService.updateWaterRecord({
-      ...req.body,
-      userId,
-    });
+  const updatedRecord = await waterService.updateWaterRecord({
+    ...req.body,
+    userId,
+  });
 
-    res.json({
-      status: 200,
-      message: 'Successfully updated the water record!',
-      data: {
-        id: updatedRecord._id,
-        userId: updatedRecord.userId,
-        amount: updatedRecord.amount,
-        date: updatedRecord.date,
-        createdAt: updatedRecord.createdAt,
-        updatedAt: updatedRecord.updatedAt,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.json({
+    status: 200,
+    message: 'Successfully updated the water record!',
+    data: {
+      id: updatedRecord._id,
+      userId: updatedRecord.userId,
+      amount: updatedRecord.amount,
+      date: updatedRecord.date,
+      createdAt: updatedRecord.createdAt,
+      updatedAt: updatedRecord.updatedAt,
+    },
+  });
 };
 
 export const deleteWaterRecord = async (req, res, next) => {
-  try {
-    const { _id } = req.params;
+  const { _id } = req.params;
 
-    await waterService.deleteWaterRecord({ _id });
+  await waterService.deleteWaterRecord({ _id });
 
-    res.json({
-      status: 200,
-      message: 'Successfully deleted the water record!',
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 400,
-      message: error.message,
-    });
-  }
+  res.json({
+    status: 200,
+    message: 'Successfully deleted the water record!',
+  });
 };
