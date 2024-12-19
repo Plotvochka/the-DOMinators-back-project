@@ -48,7 +48,7 @@ export const getUserInfoController = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: `Successfully found user info with id ${userId}!`,
+    message: `Successfully found user info !`,
     data,
   });
 };

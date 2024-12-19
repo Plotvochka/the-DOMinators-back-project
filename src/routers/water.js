@@ -2,6 +2,7 @@ import { Router } from 'express';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../middlewares/validateBody.js';
 import { authenticate } from '../middlewares/authenticate.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 import * as waterController from '../controllers/water.js';
 import {
@@ -19,14 +20,23 @@ waterRouter.post(
 );
 
 waterRouter.patch(
-  '/water/user/:userId',
+  '/water/:id',
+  isValidId,
   validateBody(updateWaterRecordSchema),
   ctrlWrapper(waterController.updateWaterRecord),
 );
 
 waterRouter.delete(
-  '/water/record/:_id',
+  '/water/:id',
+  isValidId,
   ctrlWrapper(waterController.deleteWaterRecord),
 );
-
+waterRouter.get(
+  '/water/today',
+  ctrlWrapper(waterController.getWaterConsumptionController),
+);
+waterRouter.get(
+  '/water/month',
+  ctrlWrapper(waterController.getMonthlyWaterConsumptionController),
+);
 export default waterRouter;

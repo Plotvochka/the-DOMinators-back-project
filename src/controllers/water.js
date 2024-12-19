@@ -1,56 +1,148 @@
 import * as waterService from '../services/water.js';
+import { parseWaterFilterParams } from '../utils/parseWaterFilterParams.js';
+import createHttpError from 'http-errors';
 
-export const addWaterRecord = async (req, res, next) => {
+export const addWaterRecord = async (req, res) => {
   const { _id: userId } = req.user;
-
+  const { date: reqDate, amount: amount } = req.body;
+  const date = reqDate.slice(0, 16);
+  console.log('date: ', date);
   const newRecord = await waterService.addWaterRecord({
-    ...req.body,
+    date,
+    amount,
     userId,
   });
 
   res.status(201).json({
     status: 201,
     message: 'Successfully created a water record!',
-    data: {
-      id: newRecord.id,
-      userId: newRecord.userId,
-      amount: newRecord.amount,
-      date: newRecord.date,
-      createdAt: newRecord.createdAt,
-      updatedAt: newRecord.updatedAt,
-    },
+    data: newRecord,
   });
 };
 
-export const updateWaterRecord = async (req, res, next) => {
-  const { _id: userId } = req.user;
-
+export const updateWaterRecord = async (req, res) => {
+  const { id: _id } = req.params;
+  const payload = {};
+  const { amount, date } = req.body;
+  if (amount) {
+    payload.amount = amount;
+  }
+  if (date) {
+    payload.date = date.slice(0, 16);
+  }
+  console.log('payload: ', payload);
   const updatedRecord = await waterService.updateWaterRecord({
-    ...req.body,
-    userId,
+    payload,
+    _id,
   });
-
+  if (!updatedRecord) {
+    throw createHttpError(404, 'Contact not found');
+  }
   res.json({
     status: 200,
     message: 'Successfully updated the water record!',
-    data: {
-      id: updatedRecord._id,
-      userId: updatedRecord.userId,
-      amount: updatedRecord.amount,
-      date: updatedRecord.date,
-      createdAt: updatedRecord.createdAt,
-      updatedAt: updatedRecord.updatedAt,
-    },
+    data: updatedRecord,
   });
 };
 
-export const deleteWaterRecord = async (req, res, next) => {
-  const { _id } = req.params;
+export const deleteWaterRecord = async (req, res) => {
+  const { id: _id } = req.params;
 
-  await waterService.deleteWaterRecord({ _id });
-
+  const data = await waterService.deleteWaterRecord({ _id });
+  if (!data) {
+    throw createHttpError(404, `Record with id=${_id} not found`);
+  }
+  res.status(204).send();
+};
+export const getWaterConsumptionController = async (req, res) => {
+  const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
+  const sortBy = 'date';
+  const sortOrder = 'asc';
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date();
+  endOfDay.setHours(23, 59, 59, 999);
+  const startofDayQuery = startOfDay.toISOString().slice(0, 16);
+  const endofDayQuery = endOfDay.toISOString().slice(0, 16);
+  const filter = {
+    userId: userId,
+    startofDayQuery: startofDayQuery,
+    endofDayQuery: endofDayQuery,
+  };
+  const data = await waterService.getWaterConsamption(
+    filter,
+    sortBy,
+    sortOrder,
+  );
+  const totalWaterConsumed = data.reduce(
+    (sum, record) => sum + record.amount,
+    0,
+  );
+  const percentageOfGoal = Math.round(
+    (totalWaterConsumed / dailyWaterGoal) * 100,
+  );
   res.json({
     status: 200,
-    message: 'Successfully deleted the water record!',
+    message: 'Successfully found data!',
+    percentageOfGoal,
+    records: data,
+  });
+};
+export const getMonthlyWaterConsumptionController = async (req, res) => {
+  const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
+  const { month, year } = req.query;
+  const { parsedYear, parsedMonth } = parseWaterFilterParams(month, year);
+  const sortBy = 'date';
+  const sortOrder = 'asc';
+
+  const startOfMonth = new Date(parsedYear, parsedMonth - 1, 1);
+  const endOfMonth = new Date(parsedYear, parsedMonth, 0);
+  endOfMonth.setHours(23, 59, 59, 999);
+
+  const startofMonthQuery = startOfMonth.toISOString().slice(0, 16);
+  const endofMonthQuery = endOfMonth.toISOString().slice(0, 16);
+  const filter = {
+    startofMonthQuery: startofMonthQuery,
+    endofMonthQuery: endofMonthQuery,
+    userId: userId,
+  };
+  console.log('filter: ', filter);
+  // Пошук записів за місяць
+  const waterMonthRecords = await waterService.getMonthlyWaterConsamption(
+    filter,
+    sortBy,
+    sortOrder,
+  );
+  const dailyStats = {};
+
+  waterMonthRecords.forEach((record) => {
+    const dateKey = record.date.split('T')[0];
+    if (!dailyStats[dateKey]) {
+      dailyStats[dateKey] = { totalAmount: 0, count: 0 };
+    }
+    dailyStats[dateKey].totalAmount += record.amount;
+    dailyStats[dateKey].count += 1;
+  });
+  console.log('dailyStats: ', dailyStats);
+  const stats = Object.entries(dailyStats).map(([date, data]) => {
+    const formattedDate = new Date(date);
+    const day = formattedDate.getDate();
+    const monthName = formattedDate.toLocaleString('default', {
+      month: 'long',
+    });
+    return {
+      date: `${day}, ${monthName}`,
+      dailyGoal: `${(dailyWaterGoal / 1000).toFixed(1)} L`,
+      percentageOfGoal: `${Math.round(
+        (data.totalAmount / dailyWaterGoal) * 100,
+      )}%`,
+      recordsCount: data.count,
+    };
+  });
+  console.log('Monthly statistic', stats);
+  res.json({
+    status: 200,
+    message: 'Successfully found data!',
+    data: stats,
   });
 };
