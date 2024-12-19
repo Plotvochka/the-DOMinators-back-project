@@ -661,19 +661,13 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "userId",
                   "amount"
                 ],
                 "properties": {
-                  "userId": {
-                    "description": "User's id",
-                    "type": "string",
-                    "example": "675da24a76eb81960c1d790a"
-                  },
                   "amount": {
                     "description": "Amount of water in milliliters",
                     "type": "number",
-                    "example": 2000
+                    "example": 200
                   }
                 }
               }
@@ -704,6 +698,11 @@
                     "data": {
                       "type": "object",
                       "properties": {
+                        "id": {
+                          "description": "Record's id",
+                          "type": "string",
+                          "example": "6763371dbad1e7c882fcff63"
+                        },
                         "userId": {
                           "description": "User's id",
                           "type": "string",
@@ -713,6 +712,11 @@
                           "description": "Amount of water in milliliters",
                           "type": "number",
                           "example": 2000
+                        },
+                        "date": {
+                          "description": "date when youn add record",
+                          "type": "string",
+                          "example": "2024-12-18T20:57:01.813Z"
                         }
                       }
                     }
@@ -767,7 +771,7 @@
         }
       }
     },
-    "/water/{userId}": {
+    "/water/user/{userId}": {
       "patch": {
         "tags": [
           "Water"
@@ -805,7 +809,7 @@
                     "description": "Дата запису (ISO формат)",
                     "type": "string",
                     "format": "date-time",
-                    "example": "2024-12-15T00:00:00.000Z"
+                    "example": "2024-12-18T18:59"
                   },
                   "amount": {
                     "description": "Кількість води у мілілітрах",
@@ -919,14 +923,16 @@
             }
           }
         }
-      },
+      }
+    },
+    "/water/record/{_id}": {
       "delete": {
         "tags": [
           "Water"
         ],
         "summary": "Delete water record",
         "operationId": "deleteWaterRecord",
-        "description": "Дані для видалення нового запису про воду",
+        "description": "Дані для видалення запису про воду за допомогою ID",
         "security": [
           {
             "bearerAuth": []
@@ -935,16 +941,16 @@
         "parameters": [
           {
             "in": "path",
-            "name": "userId",
+            "name": "_id",
             "required": true,
             "schema": {
               "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
+              "example": "67631b964fed979c241a4988"
             }
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Successfully deleted a water record!",
             "content": {
               "application/json": {
@@ -958,11 +964,11 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 201
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully deleted a water record!"
+                      "example": "Successfully deleted the water record!"
                     },
                     "data": {
                       "type": "object",
@@ -976,6 +982,11 @@
                           "description": "Amount of water in milliliters",
                           "type": "number",
                           "example": 200
+                        },
+                        "date": {
+                          "description": "Date of water record",
+                          "type": "string",
+                          "example": "2024-12-18T12:00:00.000Z"
                         }
                       }
                     }
@@ -985,7 +996,7 @@
             }
           },
           "400": {
-            "description": "Bad request. Amount must be between 1 and 5000 ml.",
+            "description": "Bad request. The water record could not be found.",
             "content": {
               "application/json": {
                 "schema": {
@@ -997,7 +1008,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Amount must be between 1 and 5000 ml."
+                      "example": "The water record could not be found."
                     }
                   }
                 }
