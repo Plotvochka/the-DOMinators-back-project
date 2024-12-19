@@ -1,7 +1,7 @@
 import { ONE_DAY } from '../constants/index.js';
 import {
   singInUser,
-  singUpUser,
+  // singUpUser,
   logOutUser,
   requestResetToken,
   refreshUserSession,
@@ -22,12 +22,26 @@ const setupSession = (res, session) => {
 };
 
 export const createUserController = async (req, res) => {
-  const User = await singUpUser(req.body);
+  // const User = await singUpUser(req.body);
+  const session = await singInUser(req.body);
+
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + ONE_DAY),
+  });
+
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: new Date(Date.now() + ONE_DAY),
+  });
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: User,
+    data: {
+      accessToken: session.accessToken,
+      _id: session.userId,
+    },
   });
 };
 
