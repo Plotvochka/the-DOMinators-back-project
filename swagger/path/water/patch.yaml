@@ -6,13 +6,13 @@ description: 'Оновлення запису про воду для корис�
 security:
   - bearerAuth: []
 parameters:
-  - name: userId
+  - name: _id
     in: path
     required: true
-    description: 'ID користувача, для якого потрібно оновити запис'
+    description: 'ID води, про яку потрібно оновити запис'
     schema:
       type: string
-      example: '675da24a76eb81960c1d790a'
+      example: '67671a3462f139f9fee0c41d'
 requestBody:
   content:
     application/json:
@@ -49,9 +49,6 @@ responses:
             data:
               type: object
               properties:
-                userId:
-                  type: string
-                  example: '675da24a76eb81960c1d790a'
                 date:
                   type: string
                   format: date-time

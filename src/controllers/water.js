@@ -6,7 +6,7 @@ export const addWaterRecord = async (req, res) => {
   const { _id: userId } = req.user;
   const { date: reqDate, amount: amount } = req.body;
   const date = reqDate.slice(0, 16);
-  console.log('date: ', date);
+  // console.log('date: ', date);
   const newRecord = await waterService.addWaterRecord({
     date,
     amount,
@@ -30,7 +30,7 @@ export const updateWaterRecord = async (req, res) => {
   if (date) {
     payload.date = date.slice(0, 16);
   }
-  console.log('payload: ', payload);
+  // console.log('payload: ', payload);
   const updatedRecord = await waterService.updateWaterRecord({
     payload,
     _id,

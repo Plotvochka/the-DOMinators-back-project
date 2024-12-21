@@ -43,7 +43,7 @@ paths:
   /water:
     post:
       $ref: ../swagger/path/water/post.yaml
-  /water/{userId}:
+  /water/{_id}:
     patch:
       $ref: ../swagger/path/water/patch.yaml
     delete:

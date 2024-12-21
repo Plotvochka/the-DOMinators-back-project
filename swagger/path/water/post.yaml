@@ -7,16 +7,22 @@ security:
   - bearerAuth: []
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         required:
           - amount
+          - date
         properties:
           amount:
             description: 'Amount of water in milliliters'
             type: number
             example: 200
+          date:
+            description: 'Дата запису (ISO формат)'
+            type: string
+            format: date-time
+            example: '2024-12-18T18:59'
 responses:
   '201':
     description: 'Successfully created a water record!'
@@ -42,10 +48,6 @@ responses:
                   description: "Record's id"
                   type: string
                   example: '6763371dbad1e7c882fcff63'
-                userId:
-                  description: "User's id"
-                  type: string
-                  example: '675da24a76eb81960c1d790a'
                 amount:
                   description: 'Amount of water in milliliters'
                   type: number

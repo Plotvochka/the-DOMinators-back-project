@@ -390,7 +390,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found user info with id 65ca67e7ae7f10c88b598384!"
+                      "example": "Successfully found user info with id 65e4decdd286b30065d54af9!"
                     },
                     "data": {
                       "type": "object",
@@ -657,17 +657,24 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "amount"
+                  "amount",
+                  "date"
                 ],
                 "properties": {
                   "amount": {
                     "description": "Amount of water in milliliters",
                     "type": "number",
                     "example": 200
+                  },
+                  "date": {
+                    "description": "Дата запису (ISO формат)",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-18T18:59"
                   }
                 }
               }
@@ -702,11 +709,6 @@
                           "description": "Record's id",
                           "type": "string",
                           "example": "6763371dbad1e7c882fcff63"
-                        },
-                        "userId": {
-                          "description": "User's id",
-                          "type": "string",
-                          "example": "675da24a76eb81960c1d790a"
                         },
                         "amount": {
                           "description": "Amount of water in milliliters",
@@ -771,7 +773,7 @@
         }
       }
     },
-    "/water/{userId}": {
+    "/water/{_id}": {
       "patch": {
         "tags": [
           "Water"
@@ -786,13 +788,13 @@
         ],
         "parameters": [
           {
-            "name": "userId",
+            "name": "_id",
             "in": "path",
             "required": true,
-            "description": "ID користувача, для якого потрібно оновити запис",
+            "description": "ID води, про яку потрібно оновити запис",
             "schema": {
               "type": "string",
-              "example": "675da24a76eb81960c1d790a"
+              "example": "67671a3462f139f9fee0c41d"
             }
           }
         ],
@@ -842,10 +844,6 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "userId": {
-                          "type": "string",
-                          "example": "675da24a76eb81960c1d790a"
-                        },
                         "date": {
                           "type": "string",
                           "format": "date-time",
@@ -939,7 +937,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "userId",
+            "name": "_id",
             "required": true,
             "schema": {
               "type": "string",
@@ -971,11 +969,6 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "userId": {
-                          "description": "User's id",
-                          "type": "string",
-                          "example": "675da24a76eb81960c1d790a"
-                        },
                         "amount": {
                           "description": "Amount of water in milliliters",
                           "type": "number",

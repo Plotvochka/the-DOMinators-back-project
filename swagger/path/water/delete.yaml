@@ -7,7 +7,7 @@ security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: userId
+    name: _id
     required: true
     schema:
       type: string
@@ -33,10 +33,6 @@ responses:
             data:
               type: object
               properties:
-                userId:
-                  description: "User's id"
-                  type: string
-                  example: '675da24a76eb81960c1d790a'
                 amount:
                   description: 'Amount of water in milliliters'
                   type: number
