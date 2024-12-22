@@ -79,13 +79,13 @@ export const getWaterConsumptionController = async (req, res) => {
     (sum, record) => sum + record.amount,
     0,
   );
-  const percentageOfGoal = Math.round(
-    (totalWaterConsumed / dailyWaterGoal) * 100,
-  );
   res.json({
     status: 200,
     message: 'Successfully found water records!',
-    percentageOfGoal,
+    percentageOfGoal:
+      dailyWaterGoal === 0
+        ? 0
+        : Math.round((totalWaterConsumed / dailyWaterGoal) * 100),
     records: data,
   });
 };
@@ -124,7 +124,7 @@ export const getMonthlyWaterConsumptionController = async (req, res) => {
     dailyStats[dateKey].totalAmount += record.amount;
     dailyStats[dateKey].count += 1;
   });
-  console.log('dailyStats: ', dailyStats);
+  // console.log('dailyStats: ', dailyStats);
   const stats = Object.entries(dailyStats).map(([date, data]) => {
     const formattedDate = new Date(date);
     const day = formattedDate.getDate();
@@ -134,9 +134,10 @@ export const getMonthlyWaterConsumptionController = async (req, res) => {
     return {
       date: `${day}, ${monthName}`,
       dailyGoal: `${(dailyWaterGoal / 1000).toFixed(1)} L`,
-      percentageOfGoal: `${Math.round(
-        (data.totalAmount / dailyWaterGoal) * 100,
-      )}%`,
+      percentageOfGoal:
+        dailyWaterGoal === 0
+          ? `0%`
+          : `${Math.round((data.totalAmount / dailyWaterGoal) * 100)}%`,
       recordsCount: data.count,
     };
   });
