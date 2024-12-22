@@ -1066,7 +1066,7 @@
                     "status",
                     "message",
                     "percentageOfGoal",
-                    "recotds"
+                    "records"
                   ],
                   "properties": {
                     "status": {
@@ -1081,7 +1081,7 @@
                       "type": "number",
                       "example": 35
                     },
-                    "recotds": {
+                    "records": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/singleWaterRecord"
