@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import * as path from 'node:path';
 import createHttpError from 'http-errors';
+import bcrypt from 'bcrypt';
 
 import * as userInfoServices from '../services/userInfo.js';
 
@@ -54,9 +55,18 @@ export const getUserInfoController = async (req, res, next) => {
 };
 
 export const patchUserInfoController = async (req, res, next) => {
-  const { _id: userId } = req.user;
-
-  const result = await userInfoServices.updateUserInfo(userId, req.body);
+  const { _id: userId, password: userPassword } = req.user;
+  const userInfo = req.body;
+  if (userInfo.newPassword && userInfo.password) {
+    const isMatch = await bcrypt.compare(userInfo.password, userPassword);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Password is incorrect' });
+    }
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(userInfo.newPassword, saltRounds);
+    userInfo.password = hashedPassword;
+  }
+  const result = await userInfoServices.updateUserInfo(userId, userInfo);
 
   if (!result) {
     return next(createHttpError(404, 'User not found'));
@@ -70,7 +80,6 @@ export const patchUserInfoController = async (req, res, next) => {
 };
 
 export const updateUserDaylyNorm = async (req, res, next) => {
-  // const { userId } = req.params;
   const { _id: userId } = req.user;
   const { daylyNorm } = req.body;
 
