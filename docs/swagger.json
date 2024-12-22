@@ -1045,9 +1045,19 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string"
+            },
+            "example": "2024-12-15T12:10"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successfully found water!",
+            "description": "Successfully found water records!",
             "content": {
               "application/json": {
                 "schema": {
