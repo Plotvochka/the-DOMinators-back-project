@@ -56,9 +56,10 @@ export const deleteWaterRecord = async (req, res) => {
 };
 export const getWaterConsumptionController = async (req, res) => {
   const { _id: userId, daylyNorm: dailyWaterGoal } = req.user;
+  const { date } = req.query;
   const sortBy = 'date';
   const sortOrder = 'asc';
-  const startOfDay = new Date();
+  const startOfDay = new Date(date);
   startOfDay.setHours(0, 0, 0, 0);
   const endOfDay = new Date();
   endOfDay.setHours(23, 59, 59, 999);
@@ -83,7 +84,7 @@ export const getWaterConsumptionController = async (req, res) => {
   );
   res.json({
     status: 200,
-    message: 'Successfully found data!',
+    message: 'Successfully found water records!',
     percentageOfGoal,
     records: data,
   });
