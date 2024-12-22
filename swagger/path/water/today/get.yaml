@@ -22,7 +22,7 @@ responses:
             - status
             - message
             - percentageOfGoal
-            - recotds
+            - records
           properties:
             status:
               type: integer
@@ -33,7 +33,7 @@ responses:
             percentageOfGoal:
               type: number
               example: 35
-            recotds:
+            records:
               type: array
               items:
                 $ref: '../../../components/schemas/singleWaterRecord.yaml'
