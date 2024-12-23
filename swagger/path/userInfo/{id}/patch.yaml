@@ -10,8 +10,8 @@ requestBody:
     application/json:
       schema:
         type: object
-        required: 
-          -  token
+        required:
+          - token
         properties:
           name:
             description: 'User name'
@@ -23,8 +23,8 @@ requestBody:
             type: string
             minLength: 8
             maxLength: 64
-          oldPassword:
-            description: 'User oldPassword'
+          newPassword:
+            description: 'User newPassword'
             type: string
             minLength: 8
             maxLength: 64
@@ -36,7 +36,7 @@ requestBody:
             type: string
             enum: ['male', 'female']
           token:
-            description: "User token"
+            description: 'User token'
             type: string
 responses:
   '200':
