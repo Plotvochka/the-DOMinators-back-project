@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import UserInfoCollection from '../db/models/UserInfo.js';
 import createHttpError from 'http-errors';
-import { ONE_DAY, FIFTEEN_MINUTES } from '../constants/index.js';
+import { ONE_DAY } from '../constants/index.js';
 import { SessionCollection } from '../db/models/session.js';
 import { randomBytes } from 'crypto';
 // import { JWT } from '../constants/index.js';
@@ -55,7 +55,7 @@ export const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   };
 };
